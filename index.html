@@ -3,11 +3,11 @@
 		<title>UpSlide.js</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="css/style.css" type="text/css" rel="stylesheet" />
-		<link href="css/upSlide.css" type="text/css" rel="stylesheet" />
+		<link href="css/upslide.css" type="text/css" rel="stylesheet" />
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/jquery-ui-1.10.3.custom.js"></script>
 		<script src="js/jquery.mousewheel.js"></script>
-		<script src="js/jquery.upSlide.js"></script>
+		<script src="js/jquery.upslide.js"></script>
 		
 	</head>
 	<body>
@@ -16,18 +16,18 @@
 			<p>Loading content...</p>
 		</div>
 		
-		<div id="upSlide" class="upSlide">
+		<div id="upslide" class="upslide">
 			<ul>	
-				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide7.jpg') no-repeat;background-position:center">
+				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide7.jpg') no-repeat;background-position:center">
 					<div>
-						<p class="upSlide-bannerText">UpSlide.js</p>
+						<h2 class="upslide-bannerText">UpSlide.js</h2>
 					</div>
 				</li>
 				
 				
-				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide3.jpg') no-repeat;background-position:center">
+				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide3.jpg') no-repeat;background-position:center">
 					<div>
-						<p class="upSlide-bannerText">Give your website new life!</p>
+						<h2 class="upslide-bannerText">Give your website new life!</h2>
 						<div id="contact" class="content">
 							<p>With UpSlide.js you can create a unique website with a few lines of code!
 						</div>
@@ -35,9 +35,9 @@
 				</li>
 				
 				
-				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide4.jpg') no-repeat;background-position:center">
+				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide4.jpg') no-repeat;background-position:center">
 					<div>
-						<p class="upSlide-bannerText">Things you can do with it?</p>
+						<h2 class="upslide-bannerText">Things you can do with it?</h2>
 						<div class="content">
 							
 							<div id='hiddenDiv' style='position:absolute; left:900px;display:none'>Hidden Content</div>
@@ -55,25 +55,25 @@
 				</li>
 				
 				
-				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide6.jpg') no-repeat;background-position:center">
+				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide6.jpg') no-repeat;background-position:center">
 					<div>
-						<p class="upSlide-bannerText">How to use it?</p>
+						<h2 class="upslide-bannerText">How to use it?</h2>
 						<div id="howTo" class="content">
 							
 							<h4>HTML...</h4>
 							<div>
 								<small style='float:left' class="selectCode">select</small>
 								<textarea spellcheck="false">
-&lt;div id="upSlide" class="upSlide">
+&lt;div id="upslide" class="upslide">
   &lt;ul>	
-    &lt;li class="upSlide-bannerBackground" style="display: block;background:url('img/slide1.jpg') no-repeat;background-position:center">
+    &lt;li class="upslide-bannerBackground" style="display: block;background:url('img/slide1.jpg') no-repeat;background-position:center">
       &lt;div>
-	   &lt;p class="upSlide-bannerText">Slide 1&lt;/p>
+	   &lt;p class="upslide-bannerText">Slide 1&lt;/p>
       &lt;/div>
     &lt;/li>
-    &lt;li class="upSlide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
+    &lt;li class="upslide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
       &lt;div>
-	   &lt;p class="upSlide-bannerText">Slide 2&lt;/p>
+	   &lt;p class="upslide-bannerText">Slide 2&lt;/p>
       &lt;/div>
     &lt;/li>
   &lt;/ul>
@@ -88,7 +88,7 @@
 &lt;script type="text/javascript">
 
   $(document).ready(function(){
-	var upSlide = $('#upSlide > ul').upSlide({
+	var upslide = $('#upslide > ul').upslide({
 		speed: 1500,
 		delay: 5000,
 		easing: 'easeInOutQuint',
@@ -131,15 +131,7 @@
 							<div>
 								<small style='float:left' class="selectCode">select</small>
 								<textarea spellcheck="false">
-/* 
-    Document   : upSlide.css
-    Created on : Jan 1, 2014, 4:25:47 PM
-    Author     : Michael Dahlke
-    Description:
-        Styles for the UpSlide jQuery plugin.
-*/
-
-.upSlide {
+.upslide {
 	position: relative;
 	background-color: white;
 	margin:0 auto;
@@ -151,7 +143,7 @@
 	overflow: hidden;
 }
 
-.upSlide-arrow {
+.upslide-arrow {
 	display: block;
 	position: absolute;
 	left: 50%;
@@ -165,31 +157,30 @@
 	-o-transition: all 0.5s 0s;
 	z-index: 99;
 }
-.upSlide-arrow:nth-of-type(odd) {
+.upslide-arrow:nth-of-type(odd) {
 	top: 0px;
 }
 
-.upSlide-arrow:nth-of-type(even) {
+.upslide-arrow:nth-of-type(even) {
 	bottom: 0px;
 }
 
-.upSlide ul {
+.upslide ul {
 	position: absolute;
 	box-sizing:border-box;
-	top:0;
 	margin: 0;
 	padding: 0;
 	height:100%;
 	float:left;
 }
 
-.upSlide li {
+.upslide li {
 	background-repeat: no-repeat;
 	background-position: center;
 	height:100%;
 }
 
-.upSlide-bannerBackground {
+.upslide-bannerBackground {
 	position: relative;
 	background-size:100% 100% !important;
 	color: white;
@@ -197,15 +188,13 @@
 	height:100%;
 }
 
-.upSlide-bannerText {
+.upslide-bannerText {
 	position: absolute;
 	box-sizing:border-box;
 	background-color: #0086A0;
 	margin:0;
 	padding: 2% 1% 2% 1%;
 	color: white;
-	font-weight: bolder;
-	font-size: 1.5em;
 	width: 100%;
 	z-index: 9;
 	
@@ -217,20 +206,18 @@
      1px 1px 0 #000;
 }
 
-.upSlide-thumbnailWrapper {
+.upslide-thumbnailWrapper {
 	position:absolute;
 	box-sizing:border-box;
-	top:0;
 	border-right:1px solid black;
 	border-top:1px solid black;
 	border-bottom:1px solid black;
 	width:10%;
 	float:left;
-	overflow:auto;
 	z-index:9999;
 }
 
-.upSlide-thumbnail {
+.upslide-thumbnail {
 	box-sizing:border-box;
 	background-size:100% 100%;
 	background-repeat:no-repeat;
@@ -241,17 +228,17 @@
 	overflow:hidden;
 }
 
-.upSlide-thumbnail:last-of-type {
+.upslide-thumbnail:last-of-type {
 	border-bottom:none !important;
 }
 
-.upSlide-thumbnailIndicator {
+.upslide-thumbnailIndicator {
 	position:absolute;
 	top:0px;
 	z-index:99999;
 }
 
-.upSlide-thumbnailTitle {
+.upslide-thumbnailTitle {
 	position:relative;
 	top:20px;
 	font-size:1.3em;
@@ -265,9 +252,9 @@
 				</li>
 				
 				
-				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
+				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
 					<div>
-						<p class="upSlide-bannerText">Download!</p>
+						<h2 class="upslide-bannerText">Download!</h2>
 					</div>
 					<div id="downloadDiv">
 						<h3>Download!</h3>
@@ -298,7 +285,7 @@
 				});
 			
 		   
-				var upSlide = $('#upSlide > ul').upSlide({
+				var upslide = $('#upslide > ul').upslide({
 					speed: 1500,
 					delay: 5000,
 					easing: 'easeInOutQuint',
@@ -317,7 +304,8 @@
 					thumbnailWidth: '10%',
 					thumbnailPosition: 'right',
 					thumbnailHeader: true,
-					thumbnailBorderSize: '1.26',
+					thumbnailBorderSize: '0',
+					thumbnailWrapperScrollable: false,
 					thumbnailIndicator: {
 						speed: 1500,
 						easing: 'linear',
@@ -333,12 +321,12 @@
 					}
 				});
 
-				upSlide.opts.onSlideStart = function(){
+				upslide.opts.onSlideStart = function(){
 					$('.slideOptions').fadeOut();
 				};
 				
-				upSlide.opts.onSlideComplete = function(){
-					if( upSlide.currentSlide === ( upSlide.numberOfSlides - 1 ) ) {
+				upslide.opts.onSlideComplete = function(){
+					if( upslide.currentSlide === ( upslide.numberOfSlides - 1 ) ) {
 						$('#downloadDiv').stop().animate({
 							'padding': '30px',
 							'border': '1px solid darkgray',
@@ -349,31 +337,16 @@
 					$('.slideOptions').fadeIn(300);
 				};
 				
-				$('#upSlide2 > ul').upSlide({
-					fullscreen: true,
-					thumbnailWidth: '5%',
-					thumbnailPosition:'right',
-					thumbnailBorderSize: '.25',
-					thumbnailHeader: false,
-					thumbnailIndicator: {
-						width: '2px',
-						position: {
-							side: 'left',
-							inOrOut: 'in'
-						}
-					}
-				});
-				
 
 				$('#toggleAutoSlide').click(function(){
-					if(upSlide.opts.autoSlide){
-						upSlide.opts.autoSlide = false;
-						upSlide.stop();
+					if(upslide.opts.autoSlide){
+						upslide.opts.autoSlide = false;
+						upslide.stop();
 						$(this).text('Start auto-scroll');
 					}
 					else {
-						upSlide.opts.autoSlide = true;
-						upSlide.start();
+						upslide.opts.autoSlide = true;
+						upslide.start();
 						$(this).text('Stop auto-scroll');
 					}
 				});
