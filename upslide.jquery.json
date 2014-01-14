@@ -1,0 +1,30 @@
+{
+    "name": "upslide",
+    "title": "UpSlide Slider",
+    "description": "jQuery plugin for an image or webpage slider.",
+    "keywords": [
+        "slider",
+        "image",
+		"gallery",
+		"webpage"
+    ],
+    "version": "1.4.1",
+    "author": {
+        "name": "Michael Dahlke",
+        "url": "http://www.michaeldahlke.com"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/jquery/jquery-color/blob/2.1.2/MIT-LICENSE.txt"
+        }
+    ],
+    "bugs": "https://github.com/mdahlke/UpSlide.js/issues",
+    "homepage": "http://upslide.michaeldahlke.com",
+    "docs": "https://github.com/mdahlke/UpSlide.js",
+	"demo": "http://upslide.michaeldahlke.com",
+    "download": "https://github.com/mdahlke/UpSlide.js/tree/upslide-1.4.1",
+    "dependencies": {
+        "jquery": ">=1.9"
+    }
+}
