@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+	<head>
+		<title>UpSlide.js</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="css/style.css" type="text/css" rel="stylesheet" />
+		<link href="css/upSlide.css" type="text/css" rel="stylesheet" />
+		<script src="js/jquery-1.10.2.min.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.js"></script>
+		<script src="js/jquery.mousewheel.js"></script>
+		<script src="js/jquery.upSlide.js"></script>
+		
+	</head>
+	<body>
+		
+		<div class="loadingCover">
+			<p>Loading content...</p>
+		</div>
+		
+		<div id="upSlide" class="upSlide">
+			<ul>	
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide7.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">UpSlide.js</p>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide3.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">Give your website new life!</p>
+						<div id="contact" class="content">
+							<p>With UpSlide.js you can create a unique website with a few lines of code!
+						</div>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide4.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">Things you can do with it?</p>
+						<div id="contact" class="content">
+							
+							<div id='hiddenDiv' style='position:absolute; left:900px;display:none'>Hidden Content</div>
+							<p>UpSlide.js works as a beautiful photo slider. But, I started this project having a more unique idea in mind.</p>
+
+							<p>
+								Instead of having it scroll through pictures, why not have it scroll through pages of the site? You could obviously have it automatically scroll the pages but that isn't very practical (but it is definitely an option).
+							</p>
+
+							<p>
+								An Example of it being used as a website (other than this one) can be found <a href="http://www.michaeldahlke.com" target="_blank">here.</a>
+							</p>
+						</div>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide6.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">How to use it?</p>
+						<div id="howTo" class="content">
+							
+							<h4>HTML...</h4>
+							<div>
+								<small style='float:left' class="selectCode">select</small>
+								<textarea>
+&lt;div id="upSlide" class="upSlide">
+  &lt;ul>	
+    &lt;li class="upSlide-bannerBackground" style="display: block;background:url('img/slide1.jpg') no-repeat;background-position:center">
+      &lt;div>
+	   &lt;p class="upSlide-bannerText">Slide 1&lt;/p>
+      &lt;/div>
+    &lt;/li>
+    &lt;li class="upSlide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
+      &lt;div>
+	   &lt;p class="upSlide-bannerText">Slide 2&lt;/p>
+      &lt;/div>
+    &lt;/li>
+  &lt;/ul>
+&lt;/div>
+								</textarea>
+							</div>
+						
+							<h4>JavaScript...</h4>
+							<div>
+								<small style='float:left' class="selectCode">select</small>
+								<textarea>
+&lt;script type="text/javascript">
+
+  $(document).ready(function(){
+	var upSlide = $('#upSlide > ul').upSlide({
+		speed: 2000,
+		delay: 3000,
+		easing: 'easeInOutQuint',
+		fadingHeaders: true,
+		headerTransparency: .5,
+		fullscreen: true,
+		autoSlide: false,
+		rrowControl: true,
+		thumbnails: true,
+		thumbnailWidth: '10%',
+		thumbHeader: true,
+		thumbIndicator: {
+			speed: 2000,
+			easing: 'easeInOutQuint',
+			backgroundColor: ['rgba(51,51,51,0.7)','rgba(237, 229, 72,0.9)','rgba(217, 18, 23,0.9)','rgba(72, 41, 57,0.9)','rgba(132, 191, 212,0.9)'],
+			width: '5px',
+			position: {
+				side: 'right',
+				inOrOut: 'in'
+			}
+		},
+		onSlide: function() { 
+			console.log('I just slid!');
+		}
+	});
+  });
+&lt;/script>
+
+								</textarea>
+							</div>
+							
+							<h4>CSS...</h4>
+							<div>
+								<small style='float:left' class="selectCode">select</small>
+								<textarea>
+.upSlide {
+	position: relative;
+	background-color: white;
+	margin:0 auto;
+	text-align: center;
+	width: 85%;
+	height:500px;
+	overflow: auto;
+	clear: both;
+	overflow: hidden;
+}
+
+.upSlide-arrow {
+	display: block;
+	position: absolute;
+	left: 50%;
+	width: 40px;
+	height: 40px;
+	opacity: .4;
+	transition: all 0.5s 0s;
+	-webkit-transition: all 0.5s 0s;
+	-moz-transition: all 0.5s 0s;
+	-ms-transition: all 0.5s 0s;
+	-o-transition: all 0.5s 0s;
+	z-index: 99;
+}
+.upSlide-arrow:nth-of-type(odd) {
+	top: 0px;
+}
+
+.upSlide-arrow:nth-of-type(even) {
+	bottom: 0px;
+}
+
+.upSlide ul {
+	position: absolute;
+	margin: 0 0 0 10%;
+	padding: 0;
+	width: 90%;
+	height:100%;
+	float:left;
+}
+
+.upSlide li {
+	background-repeat: no-repeat;
+	background-position: center;
+	height:100%;
+}
+
+.upSlide-bannerBackground {
+	position: relative;
+	background-size:100% 100% !important;
+	color: white;
+	width: 100%;
+	height:100%;
+}
+
+.upSlide-bannerText {
+	position: absolute;
+	background-color: #0086A0;
+	margin:0;
+	padding: 2% 1% 2% 1%;
+	color: white;
+	font-weight: bolder;
+	font-size: 1.5em;
+	width: 100%;
+	z-index: 9;
+	
+	color: white;
+	text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+.upSlide-thumbnailWrapper {
+	position:relative;
+	box-sizing:border-box;
+	top:0;
+	border-right:1px solid black;
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	width:10%;
+	float:left;
+	z-index:9999;
+}
+
+.upSlide-thumbnail {
+	box-sizing:border-box;
+	background-size:100% 100%;
+	background-repeat:none;
+	border-bottom:5px solid black;
+	cursor:pointer;
+	width:100%;
+	max-height:200px;
+	overflow:hidden;
+}
+
+.upSlide-thumbnail:last-child {
+	border-bottom:none;
+}
+
+.upSlide-thumbIndicator {
+	position:absolute;
+	top:0px;
+	z-index:99999;
+}
+
+.upSlide-thumbTitle {
+	position:relative;
+	top:20px;
+	font-size:1.3em;
+	font-weight:bold;
+}
+
+								</textarea>
+							</div>
+						</div>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">Download!</p>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+		
+		<div id="upSlide2" class="upSlide">
+			 <ul>
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center"></li>
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide4.jpg') no-repeat;background-position:center"></li>
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide7.jpg') no-repeat;background-position:center"></li>
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide1.jpg') no-repeat;background-position:center"></li>
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide3.jpg') no-repeat;background-position:center"></li>
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide5.jpg') no-repeat;background-position:center"></li>
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide6.jpg') no-repeat;background-position:center"></li>
+			</ul>
+		</div>
+		
+		<div id="downloadDiv">
+			<small id="closeDownload" style="position:absolute;top:0px;right:10px;cursor:pointer;text-decoration:underline;">close</small>
+			<h3>Download!</h3>
+			<p><a id="downloadLink" href="inc/plusOneDownload.inc.php">UpSlide-1.2.zip</a></p>
+		</div>
+
+		<div class="slideOptions" id='toggleAutoSlide' style='position:absolute;top:10px; left:10px;z-index:99999999999;color:white;cursor:pointer;'>Stop auto-scroll</div>
+		<div class="slideOptions" id='addSlide' style='position:absolute;top:40px; left:10px;z-index:99999999999;color:white;cursor:pointer;'>Add a slide</div>
+		<div class="slideOptions" id='removeSlide' style='position:absolute;top:60px; left:10px;z-index:99999999999;color:white;cursor:pointer;'>Remove a slide</div>
+		
+		<script type="text/javascript">
+			
+			$(document).ready(function(){
+				setTimeout(function(){
+					$('.loadingCover').remove();
+				}, 1000);
+
+				$('.content').css({
+					'height': ( $(window).height() / 1.35 ) + 'px'
+				});
+				
+				$(window).resize(function(){
+					$('.content').css({
+						'height': ( $(window).height() / 1.35 ) + 'px'
+					});
+				});
+			
+		   
+				var upSlide = $('#upSlide > ul').upSlide({
+					speed: 1500,
+					delay: 5000,
+					easing: 'easeInOutQuint',
+					fadingHeaders: true,
+					fadingHeadersSpeed: 2000,
+					headerTransparency: 0.5,
+					sameSlideAndHeaderColor: true,
+					fullscreen: true,
+					autoSlide: true,
+					arrowControl: true,
+					scrollControl: true,
+					thumbnails: true,
+					thumbnailsPosition: 'right',
+					thumbHeader: true,
+					thumbBorderSize: '5',
+					thumbIndicator: {
+						speed: 1500,
+						easing: 'easeInOutQuint',
+						backgroundColor: ['rgba(51,51,51,0.7)','rgba(237, 229, 72,0.7)','rgba(217, 18, 23,0.7)','rgba(72, 41, 57,0.7)','rgba(132, 191, 212,0.7)'],
+						width: '5px',
+						position: {
+							side: 'left',
+							inOrOut: 'in'
+						}
+					},
+					onSlide: function() { 
+						//console.log('I just slid!');
+					}
+				});
+				
+				upSlide.opts.onSlideStart = function(){
+					$('.slideOptions').fadeOut();
+				};
+				
+				upSlide.opts.onSlideComplete = function(){
+					if( upSlide.currentSlide === ( upSlide.numberOfSlides - 1 ) ) {
+						$('#downloadDiv').stop().animate({
+							'padding': '30px',
+							'border': '1px solid darkgray',
+							'width': '150px',
+							'height': '100px'
+						}, 1000);
+					}
+					$('.slideOptions').fadeIn(300);
+				};
+				
+				$('#closeDownload').click(function(){
+					$(this).parent().animate({
+						'padding': '0',
+						'border': 'none',
+						'width': '0px',
+						'height': '0px'
+					}, 1000);
+				});
+				
+				/**
+				 * 
+				 * If you want to dynamically add slides to your slider then this
+				 * is how you do it. If you do find a better way of doing it then
+				 * please let me know (email is in the .js file)
+				 * 
+				 */
+				var timesClicked = 1;
+				$('#addSlide').click(function(){
+					var n = Math.floor(Math.random() * 7) + 1;
+					console.log(upSlide);
+					$('#upSlide ul').append('<li class="upSlide-bannerBackground" style="display: block;background:url(\'img/slide'+n+'.jpg\') no-repeat;background-position:center"><div><p class="upSlide-bannerText">Added Slide #'+ timesClicked + '</p></div></li>');
+					$('#upSlide ul').css({
+						'top': '0px'
+					});
+					upSlide.startTheCreationProcess();
+					upSlide.resizePlugin();
+					upSlide.move(upSlide.currentSlide, false);
+					timesClicked++;
+				});
+				$('#removeSlide').click(function(){
+					$('#upSlide ul li').last().remove();
+					$('#upSlide ul').css({
+						'top': '0px'
+					});
+					upSlide.startTheCreationProcess();
+					upSlide.resizePlugin();
+					upSlide.move(upSlide.currentSlide, false);
+					timesClicked--;
+					if(timesClicked <= 0) timesClicked = 1;
+				});
+				
+				$('#switch').click(function(){
+					upSlide.opts.thumbnailsPosition = 'left';
+					upSlide.startTheCreationProcess();
+					upSlide.resizePlugin();
+				});
+				
+				$('#upSlide2 > ul').upSlide({
+					fullscreen: true,
+					thumbnailWidth: '05%',
+					thumbnailsPosition:'left',
+					thumbHeader: false
+				});
+				
+
+				$('#toggleAutoSlide').click(function(){
+					if(upSlide.opts.autoSlide){
+						upSlide.opts.autoSlide = false;
+						upSlide.stop();
+						$(this).text('Start auto-scroll');
+					}
+					else {
+						upSlide.opts.autoSlide = true;
+						upSlide.start();
+						$(this).text('Stop auto-scroll');
+					}
+				});
+
+				$('#downloadLink').click(function(){
+					$.ajax({
+						type: 'post',
+						url: 'inc/plusOneDownload.inc.php'
+					});
+					setTimeout(function(){}, 500);
+				});
+
+				$('.selectCode').click(function(){
+					$(this).siblings('textarea').focus().select();
+				});
+				
+			});
+			
+			
+		</script>
+	</body>
+</html>

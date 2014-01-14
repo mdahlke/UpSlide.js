@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+	<head>
+		<title>UpSlide.js</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="css/style.css" type="text/css" rel="stylesheet" />
+		<link href="css/upSlide.css" type="text/css" rel="stylesheet" />
+		<script src="js/jquery-1.10.2.min.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.js"></script>
+		<script src="js/jquery.mousewheel.js"></script>
+		<script src="js/jquery.upSlide.js"></script>
+		
+	</head>
+	<body>
+		
+		<div class="loadingCover">
+			<p>Loading content...</p>
+		</div>
+		
+		<div id="upSlide" class="upSlide">
+			<ul>	
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide7.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">UpSlide.js</p>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide3.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">Give your website new life!</p>
+						<div id="contact" class="content">
+							<p>With UpSlide.js you can create a unique website with a few lines of code!
+						</div>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide4.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">Things you can do with it?</p>
+						<div class="content">
+							
+							<div id='hiddenDiv' style='position:absolute; left:900px;display:none'>Hidden Content</div>
+							<p>UpSlide.js works as a beautiful photo slider. But, I started this project having a more unique idea in mind.</p>
+
+							<p>
+								Instead of having it scroll through pictures, why not have it scroll through pages of the site? You could obviously have it automatically scroll the pages but that isn't very practical (but it is definitely an option).
+							</p>
+
+							<p>
+								An Example of it being used as a website (other than this one) can be found <a href="http://www.michaeldahlke.com" target="_blank">here.</a>
+							</p>
+						</div>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide6.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">How to use it?</p>
+						<div id="howTo" class="content">
+							
+							<h4>HTML...</h4>
+							<div>
+								<small style='float:left' class="selectCode">select</small>
+								<textarea spellcheck="false">
+&lt;div id="upSlide" class="upSlide">
+  &lt;ul>	
+    &lt;li class="upSlide-bannerBackground" style="display: block;background:url('img/slide1.jpg') no-repeat;background-position:center">
+      &lt;div>
+	   &lt;p class="upSlide-bannerText">Slide 1&lt;/p>
+      &lt;/div>
+    &lt;/li>
+    &lt;li class="upSlide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
+      &lt;div>
+	   &lt;p class="upSlide-bannerText">Slide 2&lt;/p>
+      &lt;/div>
+    &lt;/li>
+  &lt;/ul>
+&lt;/div>
+								</textarea>
+							</div>
+						
+							<h4>JavaScript...</h4>
+							<div>
+								<small style='float:left' class="selectCode">select</small>
+								<textarea spellcheck="false">
+&lt;script type="text/javascript">
+
+  $(document).ready(function(){
+	var upSlide = $('#upSlide > ul').upSlide({
+		speed: 1500,
+		delay: 5000,
+		easing: 'easeInOutQuint',
+		fadingHeaders: true,
+		fadingHeadersSpeed: 2000,
+		headerHideText: false,
+		headerBackgroundTransparency: 0,
+		headerBackgroundColor: ['red', 'green'],
+		headerGenerateBackgroundColor: true,
+		sameSlideAndHeaderColor: true,
+		fullscreen: true,
+		autoSlide: true,
+		arrowControl: true,
+		scrollControl: true,
+		thumbnail: false,
+		thumbnailWidth: '10%',
+		thumbnailPosition: 'left',
+		thumbnailHeader: true,
+		thumbnailBorderSize: '1.26',
+		thumbnailIndicator: {
+			speed: 1500,
+			easing: 'linear',
+			width: '5px',
+			position: {
+				side: 'right',
+				inOrOut: 'in'
+			}
+		},
+		onSlide: function() { 
+			console.log('I just slid!');
+		}
+	});
+  });
+&lt;/script>
+
+								</textarea>
+							</div>
+							
+							<h4>CSS...</h4>
+							<div>
+								<small style='float:left' class="selectCode">select</small>
+								<textarea spellcheck="false">
+/* 
+    Document   : upSlide.css
+    Created on : Jan 1, 2014, 4:25:47 PM
+    Author     : Michael Dahlke
+    Description:
+        Styles for the UpSlide jQuery plugin.
+*/
+
+.upSlide {
+	position: relative;
+	background-color: white;
+	margin:0 auto;
+	text-align: center;
+	width: 85%;
+	height:500px;
+	overflow: auto;
+	clear: both;
+	overflow: hidden;
+}
+
+.upSlide-arrow {
+	display: block;
+	position: absolute;
+	left: 50%;
+	width: 40px;
+	height: 40px;
+	opacity: .4;
+	transition: all 0.5s 0s;
+	-webkit-transition: all 0.5s 0s;
+	-moz-transition: all 0.5s 0s;
+	-ms-transition: all 0.5s 0s;
+	-o-transition: all 0.5s 0s;
+	z-index: 99;
+}
+.upSlide-arrow:nth-of-type(odd) {
+	top: 0px;
+}
+
+.upSlide-arrow:nth-of-type(even) {
+	bottom: 0px;
+}
+
+.upSlide ul {
+	position: absolute;
+	box-sizing:border-box;
+	top:0;
+	margin: 0;
+	padding: 0;
+	height:100%;
+	float:left;
+}
+
+.upSlide li {
+	background-repeat: no-repeat;
+	background-position: center;
+	height:100%;
+}
+
+.upSlide-bannerBackground {
+	position: relative;
+	background-size:100% 100% !important;
+	color: white;
+	width: 100%;
+	height:100%;
+}
+
+.upSlide-bannerText {
+	position: absolute;
+	box-sizing:border-box;
+	background-color: #0086A0;
+	margin:0;
+	padding: 2% 1% 2% 1%;
+	color: white;
+	font-weight: bolder;
+	font-size: 1.5em;
+	width: 100%;
+	z-index: 9;
+	
+	color: white;
+	text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+.upSlide-thumbnailWrapper {
+	position:absolute;
+	box-sizing:border-box;
+	top:0;
+	border-right:1px solid black;
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	width:10%;
+	float:left;
+	overflow:auto;
+	z-index:9999;
+}
+
+.upSlide-thumbnail {
+	box-sizing:border-box;
+	background-size:100% 100%;
+	background-repeat:no-repeat;
+	border-bottom:5px solid black;
+	cursor:pointer;
+	width:100%;
+	float:left;
+	overflow:hidden;
+}
+
+.upSlide-thumbnail:last-of-type {
+	border-bottom:none !important;
+}
+
+.upSlide-thumbnailIndicator {
+	position:absolute;
+	top:0px;
+	z-index:99999;
+}
+
+.upSlide-thumbnailTitle {
+	position:relative;
+	top:20px;
+	font-size:1.3em;
+	font-weight:bold;
+}
+
+								</textarea>
+							</div>
+						</div>
+					</div>
+				</li>
+				
+				
+				<li class="upSlide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
+					<div>
+						<p class="upSlide-bannerText">Download!</p>
+					</div>
+					<div id="downloadDiv">
+						<h3>Download!</h3>
+						<p><a id="downloadLink" href="inc/plusOneDownload.inc.php">UpSlide-1.3.zip</a></p>
+					</div>
+				</li>
+
+			</ul>
+		</div>		
+
+		<div class="slideOptions" id='toggleAutoSlide' style='position:absolute;top:10px; left:10px;z-index:99999999999;color:white;cursor:pointer;'>Stop auto-scroll</div>
+		
+		<script type="text/javascript">
+			
+			$(document).ready(function(){
+				setTimeout(function(){
+					$('.loadingCover').remove();
+				}, 1000);
+
+				$('.content').css({
+					'height': ( $(window).height() / 1.35 ) + 'px'
+				});
+				
+				$(window).resize(function(){
+					$('.content').css({
+						'height': ( $(window).height() / 1.35 ) + 'px'
+					});
+				});
+			
+		   
+				var upSlide = $('#upSlide > ul').upSlide({
+					speed: 1500,
+					delay: 5000,
+					easing: 'easeInOutQuint',
+					fadingHeaders: true,
+					fadingHeadersSpeed: 2000,
+					headerHideText: false,
+					headerBackgroundTransparency: 0.5,
+					headerBackgroundColor: ['red', 'green'],
+					headerGenerateBackgroundColor: true,
+					sameSlideAndHeaderColor: true,
+					fullscreen: true,
+					autoSlide: true,
+					arrowControl: true,
+					scrollControl: true,
+					thumbnail: true,
+					thumbnailWidth: '10%',
+					thumbnailPosition: 'right',
+					thumbnailHeader: true,
+					thumbnailBorderSize: '1.26',
+					thumbnailIndicator: {
+						speed: 1500,
+						easing: 'linear',
+						width: '5px',
+						transparency: '0.3',
+						position: {
+							side: 'left',
+							inOrOut: 'in'
+						}
+					},
+					onSlide: function() { 
+						//console.log('I just slid!');
+					}
+				});
+
+				upSlide.opts.onSlideStart = function(){
+					$('.slideOptions').fadeOut();
+				};
+				
+				upSlide.opts.onSlideComplete = function(){
+					if( upSlide.currentSlide === ( upSlide.numberOfSlides - 1 ) ) {
+						$('#downloadDiv').stop().animate({
+							'padding': '30px',
+							'border': '1px solid darkgray',
+							'width': '150px',
+							'height': '100px'
+						}, 1000);
+					}
+					$('.slideOptions').fadeIn(300);
+				};
+				
+				$('#upSlide2 > ul').upSlide({
+					fullscreen: true,
+					thumbnailWidth: '5%',
+					thumbnailPosition:'right',
+					thumbnailBorderSize: '.25',
+					thumbnailHeader: false,
+					thumbnailIndicator: {
+						width: '2px',
+						position: {
+							side: 'left',
+							inOrOut: 'in'
+						}
+					}
+				});
+				
+
+				$('#toggleAutoSlide').click(function(){
+					if(upSlide.opts.autoSlide){
+						upSlide.opts.autoSlide = false;
+						upSlide.stop();
+						$(this).text('Start auto-scroll');
+					}
+					else {
+						upSlide.opts.autoSlide = true;
+						upSlide.start();
+						$(this).text('Stop auto-scroll');
+					}
+				});
+
+				$('#downloadLink').click(function(){
+					$.ajax({
+						type: 'post',
+						url: 'inc/plusOneDownload.inc.php'
+					});
+					setTimeout(function(){}, 500);
+				});
+
+				$('.selectCode').click(function(){
+					$(this).siblings('textarea').focus().select();
+				});
+				
+			});
+			
+			
+		</script>
+	</body>
+</html>
