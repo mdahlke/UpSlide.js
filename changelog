@@ -29,11 +29,17 @@ Version 1.4 - Jan 12, 2014
  - More support for resizing
  - JSHint checked
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  - ATTENTION: changed all "upslide" classes, id's, filenames, and function names to "upslide"
 	-- make sure that you update all css, js, and html accordingly
 	-- I'm this is a big nuissance, but I assure you it will not happen again
 >>>>>>> merge-upslide
+=======
+ - ATTENTION: changed all "upslide" classes, id's, filenames, and function names to "upslide"
+	-- make sure that you update all css, js, and html accordingly
+	-- I'm this is a big nuissance, but I assure you it will not happen again
+>>>>>>> upslide-1.4.1
 
 Version 1.3 - Jan 7, 2014
  - Updated the way the headers fade in when upSlide.opts.fadingHeaders = true
