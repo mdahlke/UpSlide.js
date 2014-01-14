@@ -1,13 +1,9 @@
 UpSlide.js
 ==========
 
-jQuery image / webpage slider plugin 
-
-
->>>>>>> upslide-1.4.1
 jQuery image / webpage slider plugin is easy to implement and resizes nicely with the window.
 
-We are currently in the process of using UpSlide.js to create a __remote web presentation__ builder!
+We are currently in the process of using __UpSlide.js__ to create a __remote web presentation__ builder!
 
 Working example -- http://upslide.michaeldahlke.com
 
