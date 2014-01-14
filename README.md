@@ -5,7 +5,7 @@ jQuery image / webpage slider plugin is easy to implement and resizes nicely wit
 
 We are currently in the process of using UpSlide.js to create a __remote web presentation__ builder!
 
-Working example -- http://upload.michaeldahlke.com
+Working example -- http://upslide.michaeldahlke.com
 
 ### Simple use
 __HTML__
