@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 UpSlide.js
 ==========
 
 jQuery image / webpage slider plugin 
-=======
-#UpSlide.js
-==========
 
-=======
-#UpSlide.js
-==========
 
 >>>>>>> upslide-1.4.1
 jQuery image / webpage slider plugin is easy to implement and resizes nicely with the window.
@@ -257,8 +249,3 @@ onSlideStart: function() { return false; },
 // call a function when the slide completes its slide
 onSlideComplete: function() { return false; }
 ```
-
-<<<<<<< HEAD
->>>>>>> merge-upslide
-=======
->>>>>>> upslide-1.4.1
