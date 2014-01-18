@@ -1,14 +1,14 @@
 {
     "name": "upslide",
-    "title": "UpSlide Slider",
-    "description": "jQuery plugin for an image or webpage slider.",
+    "title": "UpSlide",
+    "description": "jQuery plugin for an image/webpage slider.",
     "keywords": [
         "slider",
         "image",
 		"gallery",
 		"webpage"
     ],
-    "version": "1.4.4",
+    "version": "1.5.0",
     "author": {
         "name": "Michael Dahlke",
         "url": "http://www.michaeldahlke.com"
@@ -22,8 +22,8 @@
     "bugs": "https://github.com/mdahlke/UpSlide.js/issues",
     "homepage": "http://upslide.michaeldahlke.com",
     "docs": "https://github.com/mdahlke/UpSlide.js",
-	"demo": "http://upslide.michaeldahlke.com",
-    "download": "https://github.com/mdahlke/UpSlide.js/tree/upslide-1.4.1",
+    "demo": "http://upslide.michaeldahlke.com",
+    "download": "https://github.com/mdahlke/UpSlide.js/tree/upslide-1.5.0",
     "dependencies": {
         "jquery": ">=1.9"
     }

@@ -107,7 +107,7 @@
 	border-bottom:none !important;
 }
 
-.upslide-thumbnailIndicator {
+.upslide-indicator {
 	position:absolute;
 	top:0px;
 	z-index:99999;

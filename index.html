@@ -8,6 +8,7 @@
 		<script src="js/jquery-ui-1.10.3.custom.js"></script>
 		<script src="js/jquery.mousewheel.js"></script>
 		<script src="js/jquery.upslide.js"></script>
+		<script src="js/jquery.slimscroll.js"></script>
 		
 	</head>
 	<body>
@@ -107,7 +108,7 @@
 		thumbnailWidth: '10%',
 		thumbnailPosition: 'left',
 		thumbnailHeader: true,
-		thumbnailBorderSize: '1.26',
+		thumbnailBorderSize: '',
 		thumbnailIndicator: {
 			speed: 1500,
 			easing: 'linear',
@@ -250,20 +251,8 @@
 						</div>
 					</div>
 				</li>
-				
-				
-				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
-					<div>
-						<h2 class="upslide-bannerText">Download!</h2>
-					</div>
-					<div id="downloadDiv">
-						<h3>Download!</h3>
-						<p><a id="downloadLink" href="inc/plusOneDownload.inc.php">UpSlide-1.3.zip</a></p>
-					</div>
-				</li>
-
 			</ul>
-		</div>		
+		</div>	
 
 		<div class="slideOptions" id='toggleAutoSlide' style='position:absolute;top:10px; left:10px;z-index:99999999999;color:white;cursor:pointer;'>Stop auto-scroll</div>
 		
@@ -285,32 +274,35 @@
 				});
 			
 		   
-				var upslide = $('#upslide > ul').upslide({
+				var upslide = $('.upslide > ul').upslide({
 					speed: 1500,
 					delay: 5000,
 					easing: 'easeInOutQuint',
 					fadingHeaders: true,
 					fadingHeadersSpeed: 2000,
 					headerHideText: false,
-					headerBackgroundTransparency: 0.5,
-					headerBackgroundColor: ['red', 'green'],
+					headerBackgroundTransparency: 1,
+					headerBackgroundColor: [],
 					headerGenerateBackgroundColor: true,
 					sameSlideAndHeaderColor: true,
 					fullscreen: true,
-					autoSlide: true,
+					autoSlide: false,
 					arrowControl: true,
-					scrollControl: true,
-					thumbnail: true,
-					thumbnailWidth: '10%',
-					thumbnailPosition: 'right',
-					thumbnailHeader: true,
-					thumbnailBorderSize: '0',
-					thumbnailWrapperScrollable: false,
-					thumbnailIndicator: {
+					scrollControl: false,
+					thumbnail: {
+						show: true,
+						width: '10%',
+						height: '250px',
+						position: 'right',
+						header: true,
+						scrollable: true
+					},
+					indicator: {
 						speed: 1500,
-						easing: 'linear',
+						easing: 'easeInOutQuint',
 						width: '5px',
-						transparency: '0.3',
+						backgroundColor: [],
+						transparency: 0.5,
 						position: {
 							side: 'left',
 							inOrOut: 'in'
@@ -320,7 +312,8 @@
 						//console.log('I just slid!');
 					}
 				});
-
+				
+				console.log(upslide);
 				upslide.opts.onSlideStart = function(){
 					$('.slideOptions').fadeOut();
 				};
@@ -337,6 +330,10 @@
 					$('.slideOptions').fadeIn(300);
 				};
 				
+				$('.' + upslide.thumbnailWrapper).slimscroll({
+					width: upslide.thumbnailWrapperWidth,
+					height: upslide.thumbnailWrapperHeight
+				});
 
 				$('#toggleAutoSlide').click(function(){
 					if(upslide.opts.autoSlide){
@@ -362,6 +359,7 @@
 				$('.selectCode').click(function(){
 					$(this).siblings('textarea').focus().select();
 				});
+				
 				
 			});
 			

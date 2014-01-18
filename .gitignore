@@ -21,3 +21,4 @@ compressed/
 .DS_Store
 .idea
 .secret
+.sass-cache/
