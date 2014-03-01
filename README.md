@@ -3,9 +3,13 @@ UpSlide.js
 
 jQuery image / webpage slider plugin is easy to implement and resizes nicely with the window.
 
-We are currently in the process of using __UpSlide.js__ to create a __remote web presentation__ builder!
+I am currently in the process of using __UpSlide.js__ to create a __remote web presentation__ builder!
 
-Working example -- http://upslide.michaeldahlke.com
+VERSION 2.0.0
+	Added the ability to have child slides
+	Added the ability to have different transition effects instead of just sliding up!
+
+Working example -- http://upslide.michaeldahlke.com  <-- Currently Using Version 1.5.0
 
 ### Simple use
 __HTML__
@@ -13,15 +17,42 @@ __HTML__
 <div id="us1" class="upslide">
 	<ul>
 		<li style="background:url('path/to/image.jpg') no-repeat;">
-			<p class="upslide-bannerText">This is the slides title</p>
-
-			<div class="content">
-				<h4>You can put any HTML inside the slide that you want!</h4>
+			<div>
+				<h2 class="upslide-bannerText">This is the slides title</h2>
+				<div class="content">
+					<h4>You can put any HTML inside the slide that you want!</h4>
+				</div>
 			</div>
+			<ul class='upslideHorizontal'>
+				<li style="background:url('img/slide5.jpg');" data-effect="slide" data-from="left">
+					<div>
+						<h2 class="upslide-bannerText">Second 1</h2>
+						<div class="upslide-content">
+							<p>
+								HI!
+							</p>
+						</div>
+					</div>
+				</li>
+				<li style="background:url('img/slide3.jpg');">
+					<div>
+						<h2 class="upslide-bannerText">Second 2</h2>
+					</div>
+				</li>
+				<li style="background:url('img/slide1.jpg');" data-effect="fade" data-from="bottom">
+					<div>
+						<h2 class="upslide-bannerText">Second 3</h2>
+					</div>
+				</li>
+			</ul>
 		<li>
 		<li style="background:url('path/to/image.jpg') no-repeat;">
-			<p class="upslide-bannerText">This title belongs to the second slide!</p>
-			<!-- this slide does not contain any text in the slide, only the title (you can also remove the slide title if you want!) -->
+			<div>
+				<h2 class="upslide-bannerText">This title belongs to the second slide!</h2>
+				<div class="content">
+					<!-- this slide does not contain any text in the slide, only the title (you can also remove the slide title if you want!) -->
+				</div>
+			</div>
 		<li>
 	</ul>
 </div>
@@ -30,128 +61,14 @@ __HTML__
 __JavaScript__
 ```javascript
 $(document).ready(function(){
-	$('#us1 > ul').upslide({
+	$('.upslide > ul').upslide({
 		fullscreen: true
 	});
 });
 ```
 
 __CSS__
-```css
-.upslide {
-	position: relative;
-	background-color: white;
-	margin:0 auto;
-	text-align: center;
-	width: 85%;
-	height:500px;
-	overflow: auto;
-	clear: both;
-	overflow: hidden;
-}
-
-.upslide-arrow {
-	display: block;
-	position: absolute;
-	left: 50%;
-	width: 40px;
-	height: 40px;
-	opacity: .4;
-	transition: all 0.5s 0s;
-	-webkit-transition: all 0.5s 0s;
-	-moz-transition: all 0.5s 0s;
-	-ms-transition: all 0.5s 0s;
-	-o-transition: all 0.5s 0s;
-	z-index: 99;
-}
-.upslide-arrow:nth-of-type(odd) {
-	top: 0px;
-}
-
-.upslide-arrow:nth-of-type(even) {
-	bottom: 0px;
-}
-
-.upslide ul {
-	position: absolute;
-	box-sizing:border-box;
-	margin: 0;
-	padding: 0;
-	height:100%;
-	float:left;
-}
-
-.upslide li {
-	background-repeat: no-repeat;
-	background-position: center;
-	height:100%;
-}
-
-.upslide-bannerBackground {
-	position: relative;
-	background-size:100% 100% !important;
-	color: white;
-	width: 100%;
-	height:100%;
-}
-
-.upslide-bannerText {
-	position: absolute;
-	box-sizing:border-box;
-	background-color: #0086A0;
-	margin:0;
-	padding: 2% 1% 2% 1%;
-	color: white;
-	width: 100%;
-	z-index: 9;
-	
-	color: white;
-	text-shadow:
-   -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
-}
-
-.upslide-thumbnailWrapper {
-	position:absolute;
-	box-sizing:border-box;
-	border-right:1px solid black;
-	border-top:1px solid black;
-	border-bottom:1px solid black;
-	width:10%;
-	float:left;
-	z-index:9999;
-}
-
-.upslide-thumbnail {
-	box-sizing:border-box;
-	background-size:100% 100%;
-	background-repeat:no-repeat;
-	border-bottom:5px solid black;
-	cursor:pointer;
-	width:100%;
-	float:left;
-	overflow:hidden;
-}
-
-.upslide-thumbnail:last-of-type {
-	border-bottom:none !important;
-}
-
-.upslide-thumbnailIndicator {
-	position:absolute;
-	top:0px;
-	z-index:99999;
-}
-
-.upslide-thumbnailTitle {
-	position:relative;
-	top:20px;
-	font-size:1.3em;
-	font-weight:bold;
-}
-```
+css is in the css folder
 
 ### All UpSlide options
 
@@ -199,49 +116,51 @@ arrowControl: false,
 // allow users to use the scrolling on the mouse to navigate (requires: mousewheel.js)
 scrollControl: false,
 
-// show thumbnails of the slides
-thumbnail: true,
-
-// position of the thumbnails
-thumbnailPosition: 'left',
-
-// show the header text on the thumbnails
-thumbnailHeader: false,
-
-// border size (if any) of the thumbnails to adjust for the height of the slides
-thumbnailBorderSize: '0',
-
-// width of the thumbnails in relation to the parent of the slide (if fullscreen, then in relation to the width of the screen)
-thumbnailWidth: '10%',
-
-// desired height of the thumbnails
-thumbnailHeight: 'auto',
-
-// allow scrolling the thumbnails (does not control the slider, think of it as allowing you to browse)
-thumbnailWrapperScrollable: false,
-
-// thumbnail indicator options
-thumbnailIndicator: {
-	// speed at which it moves to the next slide
-	speed: 2000,
-	// effect to use for the transition
-	easing: 'linear',
-	// color for the slider (if "sameSlideAndHeaderColor" is true, then this gets ignored)
-	backgroundColor: [],
-	// width of the indidcator
-	width: '2px',
-	// position of the slider
-	position: {
-		// the side of the thumbnails it is on
-		side: 'right',
-		// put it on the inside of the thumbnail (overlap the thumbnail) or outside (show all of the thumbnail)
-		inOrOut: 'in'
-	}
+// thumbnail attributes
+thumbnail: {
+	// show thumbnails
+	show: true,
+	// position of thumbnails ( left or right )
+	position: 'left',
+	// show header on thumbnail
+	header: false,
+	// width of the thumbnails
+	width: 10%,
+	// height of the thumbnails ( 'auto' sets the height so they fill the plugin window )
+	height: 'auto',
+	// allow the thumbnails to go past the plugin limits and make that area scrollable
+	scrollable: false
 },
-// call a function when a slide slides
-onSlide: function() { return false; },
-// call a function when the slide starts to slide
-onSlideStart: function() { return false; },
-// call a function when the slide completes its slide
-onSlideComplete: function() { return false; }
+// indicator attributes
+indicator: {
+	// speed that the indicator transitions
+	speed: 2000,
+	// transition effect
+	easing: 'linear',
+	// color of the indicator
+	backgroundColor: [],
+	// thickness of the indicator
+	width: '2px',
+	// transparency
+	transparency: '0.5',
+	// positioning of the indicator
+	position: {
+		// the side that the indicator will be on
+		side: 'right',
+		// inside the thumbnail wrapper or outside
+		inOrOut: 'in'
+	},
+},
+// if you don't like using the unordered list structure you can change it to something
+// like <article> and <div> or <section> and <article>
+// if you prefer
+ulAlternative: 'ul',
+liAlternative: 'li',
+// function to execute when the slide is sliding
+onSlide: function(){};
+// function to execute when the slide starts sliding
+onSlideStart: function(){};
+// function to execute when the slide has finished sliding
+onSlideFinish: function(){};
+
 ```

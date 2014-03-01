@@ -149,18 +149,3 @@
     -1px 1px 0 #000,
      1px 1px 0 #000;
 }
-
-.horPrev {
-	position: absolute;
-	top: 50%;
-	left: 10px;
-	width: 50px;
-	z-index: 99;
-}
-.horNext {
-	position: absolute;
-	top: 50%;
-	right: 10px;
-	width: 50px;
-	z-index: 99;
-}
