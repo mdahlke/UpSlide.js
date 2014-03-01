@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : upSlide.css
     Created on : Jan 1, 2014, 4:25:47 PM
     Author     : Michael Dahlke
@@ -43,39 +43,48 @@
 .upslide ul {
 	position: absolute;
 	box-sizing:border-box;
+	top:0;
 	margin: 0;
 	padding: 0;
 	height:100%;
 	float:left;
 }
 
-.upslide li {
-	background-repeat: no-repeat;
-	background-position: center;
-	height:100%;
-}
-
-.upslide-bannerBackground {
-	position: relative;
+.upslide-slideWrapper {
+	position: absolute;
 	background-size:100% 100% !important;
 	color: white;
 	width: 100%;
 	height:100%;
 }
 
-.upslide-bannerText {
+.upslide-slide {
 	position: absolute;
+	background-size:100% 100% !important;
+	color: white;
+	width: 100%;
+	height:100%;
+}
+
+.upslideHorizontal {
+	width:100%;
+}
+
+.upslideHorizontal li {
+	display:none;
+}
+
+.upslide-bannerText {
+	position: relative;
 	box-sizing:border-box;
 	background-color: #0086A0;
 	margin:0;
 	padding: 2% 1% 2% 1%;
 	color: white;
 	width: 100%;
-	z-index: 9;
-	
-	color: white;
+
 	text-shadow:
-   -1px -1px 0 #000,  
+   -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
      1px 1px 0 #000;
@@ -92,7 +101,18 @@
 	z-index:9999;
 }
 
-.upslide-thumbnail {
+.upslide-thumbnailChildWrapper {
+	position:absolute;
+	box-sizing:border-box;
+	bottom:0px;
+	/*border:2px solid white;*/
+	width:100%;
+	height:100px;
+	z-index:999;
+}
+
+.upslide-thumbnail, .upslide-thumbnailChild {
+	position: relative;
 	box-sizing:border-box;
 	background-size:100% 100%;
 	background-repeat:no-repeat;
@@ -103,21 +123,44 @@
 	overflow:hidden;
 }
 
-.upslide-thumbnail:last-of-type {
+.upslide-thumbnailChild {
+	float:left;
+}
+
+.upslide-thumbnail:last-of-type, .upslide-thumbnailChild:last-of-type {
 	border-bottom:none !important;
 }
 
-.upslide-thumbnailIndicator {
+.upslide-indicator {
 	position:absolute;
 	top:0px;
 	z-index:99999;
 }
 
-.upslide-thumbnailTitle {
+.upslide-thumbnailHeader {
 	position:relative;
 	top:20px;
+	color:white;
 	font-size:1.3em;
 	font-weight:bold;
+	text-shadow:
+   -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
 }
 
-
+.horPrev {
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	width: 50px;
+	z-index: 99;
+}
+.horNext {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	width: 50px;
+	z-index: 99;
+}

@@ -8,7 +8,7 @@
 		"gallery",
 		"webpage"
     ],
-    "version": "1.5.0",
+    "version": "2.0.0",
     "author": {
         "name": "Michael Dahlke",
         "url": "http://www.michaeldahlke.com"
@@ -23,7 +23,7 @@
     "homepage": "http://upslide.michaeldahlke.com",
     "docs": "https://github.com/mdahlke/UpSlide.js",
     "demo": "http://upslide.michaeldahlke.com",
-    "download": "https://github.com/mdahlke/UpSlide.js/tree/upslide-1.5.0",
+    "download": "https://github.com/mdahlke/UpSlide.js/tree/upslide-2.0.0",
     "dependencies": {
         "jquery": ">=1.9"
     }

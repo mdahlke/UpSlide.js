@@ -1,3 +1,7 @@
+Version 1.6 - Jan 27, 2014
+- Removed jquery.mousewheel.js dependency
+	-- upslide can now be controlled with mousewheel without external library
+
 Version 1.5 - Jan 17, 2014
  - Added support for scrolling thumbnails instead of sqeezing them onto to the page
 	-- requires slimscroll.js ( https://github.com/rochal/jQuery-slimScroll/ )

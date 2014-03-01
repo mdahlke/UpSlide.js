@@ -3,20 +3,20 @@
  * Author: Michael Dahlke
  * Contact: madahlke27@gmail.com
  * Date: 1/5/2013
- * Description: 
+ * Description:
  *		UpSlide.js is a jQuery plugin for any and all to use. I only ask that
  *		this comment remains intact because even though I am allowing you to
  *		use my code, I do want the credit for my time and effort.
- *		Other than that enjoy! 
- *		
+ *		Other than that enjoy!
+ *
  *		If you run into trouble you may email me
  *			Make sure you put UpSlider.js in the subject
- *			
+ *
  */
 /*
  * HTML must be formatted like the following...( class names can differ )
 <div class="upslide">
-	<ul>	
+	<ul>
 		<li style="display: block;background:url('img/slide1.jpg') no-repeat;background-position:center">
 			<div>
 				<p>Slide 1 - This is the first slide!</p>
@@ -27,7 +27,6 @@
 */
 
 ;(function ($) {
-	
 	function generateColor(ht, tt){
 		var r = Math.floor(Math.random() * 255) + 1;
 		var g = Math.floor(Math.random() * 255) + 1;
@@ -53,6 +52,10 @@
 			autoSlide: true,
 			arrowControl: false,
 			scrollControl: false,
+			transition: {
+				effect: 'slide',
+				from: 'bottom'
+			},
 			thumbnail: {
 				show: true,
 				position: 'left',
@@ -78,47 +81,53 @@
 			onSlideStart: function() { return false; },
 			onSlideComplete: function() { return false; }
 		}, options);
-		
+
 		this.objParentID = typeof $(obj).parent().attr('id') === 'undefined' ? Math.round(Math.random(1 * 100)) + 1 : $(obj).parent().attr('id');
 		this.intervalVar = "";
 		this.slideWrapperWidth = 0;
 		this.parentOffsetTop = $(obj).parent().offset().top;
 		this.currentSlide = 0;
+		this.currentChildSlide = 0;
+		this.currentChildSlide = 0;
 		this.previousSlide = 0;
 		this.numberOfSlides = $(obj).children(this.opts.liAlternative).length;
-		this.slideClass = 'upslide-slide_' + this.objParentID;
+		this.slideWrapperClass = 'upslide-slideWrapper';
+		this.slideClass = 'upslide-slide';
+		this.childSlideClass = 'upslide-childSlide_' + this.objParentID;
 		this.slideNumber = 'data-slideNumber_' + this.objParentID;
+		this.childSlideNumber = 'data-childSlideNumber_' + this.objParentID;
 		this.slideOffsetTop = 'data-offsetTop_' + this.objParentID;
 		this.slideLookup = [];
 		this.slides = [];
+		this.childSlides = [];
 		this.backupText = [];
 		this.thumbnailsObject = [];
-		this.thumbnailClass = 'thumb_' + this.objParentID;
+		this.thumbnailsChildObject = [];
+		this.thumbnailClass = 'upslide-thumbnail';
+		this.thumbnailChildClass = 'upslide-thumbnailChild';
 		this.thumbnailSlideNumber = 'data-slideNumberThumb_' + this.objParentID;
-		this.thumbnailWrapper = 'thumbnailWrapper_' + this.objParentID;
+		this.thumbnailWrapperClass = 'upslide-thumbnailWrapper';
+		this.thumbnailChildWrapperClass = 'upslide-thumbnailChildWrapper';
 		this.indicator = 'indicator_' + this.objParentID;
 		this.slideThumbnails = [];
 		this.thumbnailHeight = 0;
 		this.thumbnailWidth = 0;
 		this.thumbnailMargin = 0;
+		this.thumbnailIndicatorOffset = 0;
 		this.newThumbnailIndicator = "";
 		this.maxTop = 0;
 		this.slideTracker = [];
-		
-		
+		this.slideProps = {};
+
 		this.calculateSizes = function(){
-			if ( _.opts.fullscreen ){
-				$(obj).parent().width( $(window).width() );
-				$(obj).parent().height( $(window).height() );
-				this.slideHeight = $(window).height();
-				this.slideWidth = $(window).width();			
-				this.slideWrapperWidth = $(window).width();
-				this.thumbnailWrapperHeight = $(window).height();				
+
+			if ( this.opts.fullscreen ){
+				this.height = $(window).height();
+				this.width = $(window).width();
 				this.thumbnailWrapperWidth = ( $(window).width() * (parseFloat(this.opts.thumbnail.width) / 100) );
+				this.slideWrapperWidth = $(window).width() - this.thumbnailWrapperWidth;
+
 				this.thumbnailBorderWidth = parseInt( $(obj).children().first().css('border-bottom-width') );
-				
-				this.slideHeight = $(window).height();
-				this.slideWidth = this.slideWrapperWidth - this.thumbnailWrapperWidth;
 
 				if( this.opts.thumbnail.height === 'auto' || !this.opts.thumbnail.scrollable){
 					this.thumbnailHeight = ( ( this.slideHeight / this.numberOfSlides ) - this.thumbnailBorderWidth );
@@ -129,96 +138,102 @@
 
 			}
 			else {
-				this.slideWrapperWidth = $(obj).parent().width();
-				this.thumbnailWrapperHeight = $(obj).height();
+				this.height = $(obj).parent().height();
+				this.width = $(obj).parent().width();
 				this.thumbnailWrapperWidth = ( $(obj).parent().width() * (parseFloat(this.opts.thumbnail.width) / 100) );
-				this.slideHeight = $(obj).height();
-				this.slideWidth = this.slideWrapperWidth - this.thumbnailWrapperWidth;
-				
+				this.slideWrapperWidth = $(obj).parent().width() - this.thumbnailWrapperWidth;
+
 				if( this.opts.thumbnail.height === 'auto' || !this.opts.thumbnail.scrollable){
 					this.thumbnailHeight = ( ( this.slideHeight / this.numberOfSlides )  - this.thumbnailBorderWidth  );
 				}
 				else {
-					this.thumbnailHeight = this.opts.height;
+					this.thumbnailHeight = this.opts.thumbnail.height;
 				}
 			}
-			
+
+			this.slideProps.height = this.height;
+			this.slideProps.width = this.width;
+
+			if( this.opts.indicator.position.side === 'left' ){
+				this.thumbnailIndicatorOffset = '0px';
+			}
+			else {
+				this.thumbnailIndicatorOffset = this.thumbnailWrapperWidth - parseInt( this.opts.indicator.width );
+			}
+
 			this.thumbnailMargin = this.opts.thumbnail.position === 'right' ? '0' : this.thumbnailWrapperWidth;
-			
+
 			if(_.opts.thumbnail.show){
 				this.thumbnailWidthPX = $(window).width() * parseFloat( '.' + this.opts.thumbnail.width );
 				this.sliderWidth = parseInt( this.opts.thumbnail.width );
 			}
-			
-			this.thumbnailWrapperHeight = this.slideHeight;
-			this.thumbnailWidth = ( ( this.slideWidth / this.numberOfSlides ) );
-		};
-	
-	
-	
-		this.resizePlugin = function(){
-			this.calculateSizes();
 
-			if(this.opts.thumbnail.show){
-				this.createThumbnailWrapper();
+		};
+
+		this.startTheCreationProcess = function() {
+			var slideWrapper, thumbnailWrapper;
+
+			// Create the thumbnail wrapper
+			if(_.opts.thumbnail.show){
+				$('.' + this.thumbnailWrapperClass).empty();
+
+				var attr = {
+					scrollable: this.opts.thumbnail.scrollable,
+					wrapperClass: this.thumbnailWrapperClass,
+					position: _.opts.thumbnail.position,
+					css: {
+						width: this.thumbnailWrapperWidth,
+						height: $(obj).height()
+					}
+				};
+
+				this.thumbnailWrapper = new ThumbnailWrapper( attr );
+
+
+//				if( $('.' + this.thumbnailWrapperClass).length === 0 ){
+//					$(obj).prepend( thumbnailWrapper );
+//				}
+//				else {
+//					console.log( 'thumbnailWrapper currently exists :(' );
+//				}
+
 			}
 
-			this.startTheCreationProcess();
+			// Create the slide wrapper
+			attr = {
+				class: this.slideWrapperClass,
+				css: {
+					'top': '0',
+					'margin-left': this.thumbnailMargin + 'px',
+					'width': this.slideWrapperWidth + 'px'
+				}
+			};
+			this.slideWrapper = new SlideWrapper( attr );
+
+			$(obj).parent().css({
+				'width': this.width + 'px',
+				'height': this.height + 'px'
+			});
+//			$(obj).css({
+//				'top': '0',
+//				'margin-left': this.thumbnailMargin + 'px',
+//				'width': this.slideWrapperWidth + 'px'
+//			});
+
 			this.createSlides();
 
-			if(this.opts.thumbnail.show){
-				this.createThumbnailAndAddToArray();
-				this.createIndicator();
-			}
-		};
-		
-		
-		
-		this.startTheCreationProcess = function() {
-		
-			if(_.opts.thumbnail.show){
-				$('.' + this.thumbnailWrapper).empty();
-			}
-			$(obj).css({
-				'top': '0',
-				'margin-left': this.thumbnailMargin + 'px',
-				'width': this.slideWrapperWidth + 'px'
-			});
+			$(obj).parent('.upslide').append( this.thumbnailWrapper, this.slideWrapper ).children('ul').remove();
+
+			this.createIndicator()
+
+			console.log(this.thumbnailIndicatorOffset);
 
 		};
-			
-			
-			
-		this.createThumbnailWrapper = function(){
-			var overflow = this.opts.thumbnail.scrollable === true ? 'auto' : 'hidden';
-			
-			if( $('.' + this.thumbnailWrapper).length === 0 ){
-				$(obj).parent().prepend($('<div />', {
-						class: 'upslide-thumbnailWrapper ' + this.thumbnailWrapper
-					}).css({
-						'width': this.thumbnailWrapperWidth + 'px', 
-						'height': this.thumbnailWrapperHeight + 'px',
-						'overflow': overflow
-					}).css(_.opts.thumbnail.position, '0px')
-				);
-			}
-			else {
-				var overflow = this.opts.thumbnail.scrollable === true ? 'auto' : 'hidden';
-				$('.' + this.thumbnailWrapper).css({
-					'width': this.thumbnailWrapperWidth + 'px', 
-					'height': this.thumbnailWrapperHeight + 'px',
-					'overflow': overflow
-				});
-			}
-		};
-		
-		
-		
+
 		this.createIndicator = function(){
 			var bgc, positionValue;
-			this.indicatorHeight = parseInt(this.thumbnailHeight) - this.thumbnailBorderWidth;
-			
-			if(_.opts.indicator.position.side === 'left') {
+			var borderWidth = this.thumbnailBorderWidth || 0;
+			this.indicatorHeight = parseInt(this.thumbnailHeight) - borderWidth;
 				positionValue = _.opts.indicator.position.inOrOut === 'out' ? '-' + _.opts.indicator.width : '0px';
 				if( typeof this.opts.indicator.backgroundColor === 'object' ){
 					bgc = this.opts.indicator.backgroundColor[_.currentSlide];
@@ -232,131 +247,182 @@
 					'background-color': bgc,
 					'width': _.opts.indicator.width,
 					'height': this.indicatorHeight,
-					'left': positionValue
+					'left': this.thumbnailIndicatorOffset + 'px'
 				});
-			}
-			else {
-				positionValue = _.opts.indicator.position.inOrOut === 'out' ? '-' + _.opts.indicator.width : '0px';
 
-				if( typeof this.opts.indicator.backgroundColor === 'object' ){
-					bgc = this.opts.indicator.backgroundColor[_.currentSlide];
-				}
-				else {
-					bgc = this.opts.indicator.backgroundColor;
-				}
-				this.newThumbnailIndicator = $('<div />', {
-					class: this.indicator + ' upslide-indicator'
-				}).css({
-					'background-color': bgc,
-					'width': _.opts.indicator.width,
-					'height': this.indicatorHeight,
-					'right': positionValue
-				});
-			}
-			
-			$('.' + this.thumbnailWrapper).append(this.newThumbnailIndicator);
+//			if(_.opts.indicator.position.side === 'left') {
+//				positionValue = _.opts.indicator.position.inOrOut === 'out' ? '-' + _.opts.indicator.width : '0px';
+//				if( typeof this.opts.indicator.backgroundColor === 'object' ){
+//					bgc = this.opts.indicator.backgroundColor[_.currentSlide];
+//				}
+//				else {
+//					bgc = this.opts.indicator.backgroundColor;
+//				}
+//				this.newThumbnailIndicator = $('<div />', {
+//					class: this.indicator + ' upslide-indicator'
+//				}).css({
+//					'background-color': bgc,
+//					'width': _.opts.indicator.width,
+//					'height': this.indicatorHeight,
+//					'left': positionValue
+//				});
+//			}
+//			else {
+//				positionValue = _.opts.indicator.position.inOrOut === 'out' ? '-' + _.opts.indicator.width : '0px';
+//
+//				if( typeof this.opts.indicator.backgroundColor === 'object' ){
+//					bgc = this.opts.indicator.backgroundColor[_.currentSlide];
+//				}
+//				else {
+//					bgc = this.opts.indicator.backgroundColor;
+//				}
+//				this.newThumbnailIndicator = $('<div />', {
+//					class: this.indicator + ' upslide-indicator'
+//				}).css({
+//					'background-color': bgc,
+//					'width': _.opts.indicator.width,
+//					'height': this.indicatorHeight,
+//					'right': positionValue
+//				});
+//			}
+
+			$('.' + this.thumbnailWrapperClass).append(this.newThumbnailIndicator);
 		};
-		
-		
-		
-		this.createSlides = function(backupText){
+
+		this.createSlides = function(){
+			$('.' + this.thumbnailWrapperClass).empty();
+			$('.' + this.thumbnailChildWrapperClass).empty();
+			var backgroundColors;
+
+			var slideNumber = 0;
+
 			this.thumbnailsObject = [];
+			this.childThumbnails = [];
 			this.slideLookup = [];
-			$('.' + this.thumbnailWrapper).empty();
-			
-			$(obj).children(this.opts.liAlternative).each(function(i, el){
-				if( typeof _.opts.headerBackgroundColor[i] === 'undefined' ){
+			this.slides = [];
+			this.childSlidesRelatedToParent = [];
+
+			$(obj).children(this.opts.liAlternative).each(function( i, el ){
+				// figure out background colors for headers
+				if( typeof _.opts.headerBackgroundColor[slideNumber] === 'undefined' ){
 					if( _.opts.headerGenerateBackgroundColor ){
-						var backgroundColors = generateColor(_.opts.headerBackgroundTransparency, _.opts.indicator.transparency);
+						backgroundColors = generateColor(_.opts.headerBackgroundTransparency, _.opts.indicator.transparency);
 						_.opts.headerBackgroundColor.push( backgroundColors.header );
 						_.opts.indicator.backgroundColor.push( backgroundColors.indicator );
 					}
 				}
 
-				$(el).attr(_.slideNumber, i)
-					.addClass(_.slideClass)
-					.css({
-						'width': _.slideWidth,
-						'height': _.slideHeight + 'px'
+				// create slides and push them to an array
+				var slideAttributes = {
+					class: _.slideClass,
+					index: slideNumber,
+					css: {
+						backgroundColor: _.opts.headerBackgroundColor[slideNumber]
+					},
+					text: ''
+				};
+				var slide = new Slide( el, slideAttributes );
+				var thumbnailText = $(slide.element).children('div').children('.upslide-bannerText').text();
+				console.log($(slide.element).children('div').children('.upslide-bannerText').text());
+				var thumbnailAttributes = {
+					name: _.thumbnailSlideNumber,
+					value: slideNumber,
+					class: _.thumbnailClass,
+					css: {
+						backgroundImage: $(slide.element).css('background-image'),
+						height: _.opts.thumbnail.height
+					},
+					text: thumbnailText
+				};
+				var slideThumbnail = new Thumbnail( thumbnailAttributes );
+				_.thumbnailWrapper.append( $(slideThumbnail) );
+
+				_.slides.push( slide );
+
+				// check if they have child slides
+				if( $(el).children().hasClass('upslideHorizontal') ) {
+					_.thumbnailsChildObject[i] = [];
+					_.childSlidesRelatedToParent[i] = [];
+
+					var thumbnailWrapperAttributes = {
+						scrollable: _.opts.thumbnail.scrollable,
+						wrapperClass: _.thumbnailChildWrapperClass,
+						position: _.opts.thumbnail.position,
+						css: {
+							width: _.thumbnailWrapperWidth,
+							height: '60px'
+						}
+					};
+					var thumbnailWrapper = new ThumbnailWrapper( thumbnailWrapperAttributes );
+					var numberOfChildren = $(el).children('.upslideHorizontal').children('li').length;
+					var childWidth = _.thumbnailWrapperWidth / numberOfChildren;
+
+					$(el).children('.upslideHorizontal').children().each(function(ii, e) {
+						slideNumber++;
+						if( typeof _.opts.headerBackgroundColor[slideNumber] === 'undefined' ){
+							if( _.opts.headerGenerateBackgroundColor ){
+								backgroundColors = generateColor(_.opts.headerBackgroundTransparency, _.opts.indicator.transparency);
+								_.opts.headerBackgroundColor.push( backgroundColors.header );
+								_.opts.indicator.backgroundColor.push( backgroundColors.indicator );
+							}
+						}
+
+						var childAttributes = {
+							class: _.slideClass,
+							index: slideNumber,
+							css: {
+								backgroundColor: _.opts.headerBackgroundColor[slideNumber]
+							},
+							text: ''
+						};
+						var childSlide = new Slide( e, childAttributes, true );
+						var thumbAttributes = {
+							name: _.thumbnailSlideNumber,
+							value: slideNumber,
+							class: _.thumbnailChildClass,
+							css: {
+								backgroundImage: $(childSlide.element).css('background-image'),
+								height: '100%',
+								width: childWidth + 'px'
+							},
+							text: '',
+							headerBackgroundColor: _.opts.headerBackgroundColor[slideNumber]
+						};
+
+
+						var childThumbnail = new Thumbnail(thumbAttributes, true);
+
+						_.childThumbnails.push( childThumbnail );
+
+						_.slides.push( childSlide );
+						_.slideWrapper.append( childSlide.element );
+						thumbnailWrapper.append( childThumbnail );
+
 					});
-				_.slideLookup.push( $(el).offset().top - _.parentOffsetTop );
-				
-				_.thumbnailsObject.push({
-					clone: $(this)[0],
-					background: $(this).css('background'),
-					index: i
-				});
-				if(_.opts.headerHideText && backupText) {
-					_.backupText.push( $(el).children().children('.upslide-bannerText').text() );
-					$(el).children().children('.upslide-bannerText').text("");
+
+					$(slideThumbnail).append( thumbnailWrapper );
+
 				}
 
-				if( typeof _.thumbnailsObject.backupText === 'undefined' ){
-					_.thumbnailsObject[i].backupText = _.backupText[i];
-				}
-				$(el).children('div').children('.upslide-bannerText').css({
-					'background-color': _.opts.headerBackgroundColor[i]
-				});
-
-				_.slideTracker[i] = 0;
+				_.slideWrapper.append( slide.element );
+				 slideNumber++;
 			});
-			$('.' + this.thumbnailWrapper).append(this.newThumbnailIndicator);
-			
-		};
-		
-		
-		
-		this.createThumbnailAndAddToArray = function(){
-			for(var i = 0, thumbs = this.thumbnailsObject; i < thumbs.length; i++){
-				var thumb = thumbs[i];
-				var header;
-				
-				if( _.opts.thumbnail.header && typeof $(thumb.clone).children().children('.upslide-bannerText').text() !== 'undefined'){
-					header = $(thumb.clone).children().children('.upslide-bannerText').text();
-				}
-				else {
-					header = '';
-				}
-				
-				if(this.opts.headerHideText){
-					header = header === '' ? thumb.backupText : header;
-				}
-				var newThumb = $('<div />', { 
-					class: this.thumbnailClass + ' upslide-thumbnail',
-					title: header,
-					'data-title': $(thumb.clone).attr('data-title')
-				})
-				.attr(this.thumbnailSlideNumber, thumb.index)
-				.html( '<span class="upslide-thumbnailTitle textOutline">' + header + '</span>' )
-				.css({
-					'background': thumb.background,
-					'background-size': '100% 100%',
-					'background-position': '50%',
-					'float': 'left'
-				}).height(this.thumbnailHeight);
-				$('.' + this.thumbnailWrapper).append(newThumb);
-			}
-		};
 
-
+		};
 
 		this.start = function(){
 			this.interval( 'start' );
 		};
-		
-		
-		
+
 		this.stop = function(){
 			this.interval( 'stop' );
 		};
-
-
 
 		this.interval = function( action ){
 			if(action === 'start') {
 				this.intervalVar = setInterval(
 					function(){
-						_.move( "up" );
+						_.move(  );
 					}, _.opts.delay);
 			}
 			else {
@@ -364,94 +430,115 @@
 			}
 
 		};
-		
-		
-		
-		this.fadingHeaders = function( ) {
-			$('.' + this.slideClass).each(function(i, el){
-				if( parseInt( $(el).attr(_.slideNumber) ) !== _.currentSlide && parseInt( $(el).attr(_.slideNumber) ) !== _.previousSlide ) {
-					$(el).children().children('.upslide-bannerText').stop().hide();
-				}
-				else if (parseInt( $(el).attr(_.slideNumber) ) === _.currentSlide) {
-					$(el).children().children('.upslide-bannerText').stop().fadeIn(_.opts.fadingHeadersSpeed);
-				}
-			});
-		};
-
-
 
 		this.move = function( dir, animation ) {
-			this.previousSlide = _.currentSlide;
-			if( !isNaN( parseInt( dir ) ) ) {
+			var nextSlide;
+			var previousSlideNumber = this.currentSlide;
+			try {
+				this.previousSlide = this.slides[previousSlideNumber].element;
+			}
+			catch(e){
+				console.log(e);
+			}
+			if( typeof dir === 'object'){
+				var a = dir[1];
+				dir = dir[0];
+			}
+			else if( typeof dir === 'undefined' ){
+				dir = 'next';
+			}
+
+			if( !isNaN( dir ) ) {
 				this.currentSlide = dir;
+				this.moveToSlide(this.currentSlide, animation);
+
 			}
 			else {
-				if( dir === 'down' ){
-					_.currentSlide -= 1;
-					if( this.currentSlide < 0 ){
-						this.currentSlide = (_.numberOfSlides - 1);
-					}
-				}
-				else if( dir === 'up' ){
-					_.currentSlide += 1;
-					if( this.currentSlide >= _.numberOfSlides ){
+				if( dir === 'next' ){
+					this.currentSlide += 1;
+					if( this.currentSlide >= this.slides.length ){
 						this.currentSlide = 0;
 					}
+					nextSlide = this.currentSlide;
+					this.currentChildSlide = 0;
+				}
+				else if( dir === 'prev' ){
+					this.currentSlide -= 1;
+					if( this.currentSlide < 0 ){
+						this.currentSlide = (this.slides.length - 1);
+					}
+					nextSlide = this.currentSlide;
+				}
+
+				if( this.currentSlide !== previousSlideNumber ){
+					this.moveToSlide(this.currentSlide, animation);
 				}
 			}
-			
+
 			if( this.opts.thumbnail.show ){
 				this.moveThumbnailToSlide(this.currentSlide);
 			}
-			this.moveToSlide(this.currentSlide, animation);
 
 			return this;
 		};
 
-
-
 		this.moveToSlide = function( number, animation ){
-			var pos = _.slideLookup[number];
+
+			_.stop();
+			var duration;
+			var bannerText;
+			var el = _.slides[number].element;
+			var effect = $(el).attr('data-effect') || 'slide';
+			var from = $(el).attr('data-from') || 'bottom';
+			var getProps = returnEffectsAndAnimations(this.slideProps, effect, from);
+			var cass = getProps.cass;
+			var anim = getProps.anim;
+
+			bannerText = $(el).children().children('.upslide-bannerText')[0];
+
 			if(typeof animation === 'undefined'){
 				animation = true;
 			}
 			else {
 				animation = false;
 			}
-			var duration = animation === false ? 0: this.opts.speed;
-			
-			$(obj).stop().animate({
-				'top': '-' + pos + 'px',
-				'opacity': 1
-			}, {
+			duration = animation === false ? 0: this.opts.speed;
+
+			$(el).stop().css(cass).animate(anim, {
 				easing: _.opts.easing,
 				duration: duration,
 				start: function(){
 					if(_.opts.fadingHeaders){
-						_.fadingHeaders();
+						fadeInElement( bannerText, _.opts.fadingHeadersSpeed );
 					}
-					_.stop();
+					$(_.previousSlide).css({
+						zIndex: '1'
+					});
 					_.opts.onSlideStart();
 				},
 				complete: function() {
-					if(_.opts.autoSlide){
-						_.start();
-					}
 					_.slideTracker[_.currentSlide]++;
 					_.opts.onSlideComplete();
+					$(_.previousSlide).css({
+						display: 'none',
+						zIndex: '-1'
+					});
+
 				},
 				always: function(){
 					_.opts.onSlide();
 				},
 				queue: false
 			});
+			if(_.opts.autoSlide){
+				_.start();
+			}
 		};
-		
-		
-		
+
 		this.moveThumbnailToSlide = function( slideNumber, animation ){
-			var pos = $('*[' + this.thumbnailSlideNumber + '="' + slideNumber + '"]').offset().top - this.parentOffsetTop + $('*[' + this.thumbnailSlideNumber + '="' + slideNumber + '"]').parent().scrollTop();
-			var bgc;
+			var pos, bgc, anim;
+			var thumb = $('*[' + this.thumbnailSlideNumber + '="' + slideNumber + '"]');
+			var isChild = this.slides[slideNumber].child;
 			if( typeof this.opts.indicator.backgroundColor === 'object' ){
 				bgc = this.opts.indicator.backgroundColor[slideNumber];
 			}
@@ -467,20 +554,40 @@
 			else {
 				animation = false;
 			}
-			
 			var duration = animation === false ? 0: this.opts.speed;
-		$('.' + this.indicator).stop().animate({
-					'top': ( pos - 1 ) + 'px',
-					'background-color': bgc
-				}, {
+
+			if( isChild ){
+				pos = thumb.offset().top - this.parentOffsetTop + $('*[' + this.thumbnailSlideNumber + '="' + slideNumber + '"]').parent().parent().parent().scrollTop();
+				anim = {
+					top: ( pos - 1 ) + 'px',
+					backgroundColor: bgc,
+					left: thumb.offset().left + 'px',
+					width: thumb.width(),
+					height: this.opts.indicator.width
+				};
+				var side = this.opts.indicator.position.side === 'right' ? '' : '';
+				anim[this.opts.indicator.position.side] = thumb.offset()[this.opts.indicator.position.side];
+			}
+			else {
+				pos = thumb.offset().top - this.parentOffsetTop + $('*[' + this.thumbnailSlideNumber + '="' + slideNumber + '"]').parent().scrollTop();
+				anim = {
+					top: ( pos - 1 ) + 'px',
+					backgroundColor: bgc,
+					left: this.thumbnailIndicatorOffset,
+					width: this.opts.indicator.width,
+					height: this.thumbnailHeight
+				};
+
+			}
+
+			$('.' + this.indicator).stop().css(this.opts.indicator.position.side, '0px').animate(anim, {
 					easing: _.opts.indicator.easing,
 					duration: duration,
-					queue: false
+					queue: true
 				});
-			
-		};
-		
 
+
+		};
 
 		if( this.opts.sameSlideAndHeaderColor ) {
 			if( this.opts.headerBackgroundColor.length !== 0 ) {
@@ -490,37 +597,27 @@
 				this.opts.headerBackgroundColor = this.opts.indicator.backgroundColor;
 			}
 		}
-		
-		this.calculateSizes();
-		
-		if(this.opts.thumbnail.show){
-			this.createThumbnailWrapper();
-		}
-		
-		this.startTheCreationProcess();
-		this.createSlides(true);
-		
-		if(this.opts.thumbnail.show){
-			this.createThumbnailAndAddToArray();
-			this.createIndicator();
-		}
 
+		this.calculateSizes();
+		this.startTheCreationProcess();
+
+		$(this.slides[0].element).css({
+			zIndex: 1
+		});
 
 		/**
-		 * 
+		 *
 		 * Friendly check if plugin isn't fullscreen to make sure you set a height
-		 * 
+		 *
 		 */
 		if( this.slideHeight === 0 ){
 			alert('If you don\'t want the plugin to be fullscreen make sure you set a height for the parent of the <ul> it in your css!\n\n The current height for the slides is: ' + this.slideHeight + 'px.');
 		}
-		
-		
-		
+
 		/***********************************************************************
-		 * 
+		 *
 		 *							EVENT HANDLERS
-		 * 
+		 *
 		 **********************************************************************/
 		$('.prev').on('click', function(){
 			_.move('down');
@@ -532,55 +629,282 @@
 		if( this.opts.arrowControl ){
 			$('body').keydown(function(e){
 				var code = e.keyCode || e.which;
-				if( code === 38 || code === 40 ){
+//				console.log(code);
+				if (code === 37 || code === 38 || code === 39 || code === 40) {
 					e.preventDefault();
+					console.log(code);
 				}
-				if ( code === 38){
-					_.move('down');
+				if (code === 37 || code === 38) {
+					// 37 = left arrow && 38 = up arrow
+					_.move('prev');
 				}
-				else if ( e.keyCode === 40){
-					_.move('up');
+				else if (code === 39 || e.keyCode === 40) {
+					// 39 = right arrow && 40 = down arrow
+					_.move('next');
 				}
 			});
 		}
-		
-		
-		
+
 		if( this.opts.scrollControl ){
-			
-			$('.' + this.thumbnailClass).mousewheel(function(e,d){
-				e.preventDefault();
-				d = d < 0 ? 'up' : 'down';
-				_.move(d);
+			$(document).on('mousewheel', function(e){
+				_.move( e.deltaY === 1 ? 'down' : 'up' );
 			});
 		}
-
-
 
 		$(document).on('click', '.' + this.thumbnailClass, function(e){
 			e.preventDefault();
+			e.stopPropagation();
 			_.move( parseInt( $(this).attr(_.thumbnailSlideNumber) ) );
 		});
 
-
+		$(document).on('click', '.' + this.thumbnailChildClass, function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			_.move( parseInt( $(this).attr(_.thumbnailSlideNumber) ) );
+		});
 
 		$(window).resize(function(){
 			$(obj).css({
 				'top': '0px'
 			});
-			_.resizePlugin();
+			//_.resizePlugin();
 			_.move(_.currentSlide, false);
 		});
-
-
 
 		if( this.opts.autoSlide ){
 			this.start();
 		}
-		
+
 		return this;
 	}
-	
+
+	/***************************************************************************
+	 *
+	 *					Non upslide dependent functions
+	 *
+	 **************************************************************************/
+
+	/**
+	 *
+	 * @param {object} attr attributes the slide wrapper will have, class & css
+	 * @returns {HTML[object]} HTML[object] of the slideWrapper
+	 */
+	function SlideWrapper( attr ){
+		var slideWrapper = $('<div/>', {
+			class: attr.class
+		}).css(
+			attr.css
+		);
+
+		return slideWrapper;
+
+	}
+
+	function ThumbnailWrapper( attr ) {
+		if( typeof attr !== 'object' ){
+			console.log( 'attr must be an object. Currently it is (a(n)) ' + typeof attr );
+			return;
+		}
+
+		var overflow = attr.scrollable === true ? 'auto' : 'hidden';
+
+		 attr.css.overflow = overflow;
+
+		var thumbnailWrapper = $('<div/>', {
+				class: attr.wrapperClass
+			}).css( attr.css ).css(attr.position, '0px');
+
+		return thumbnailWrapper;
+
+	}
+
+	 /**
+	 * Create a new slide
+	 *
+	 * @param {element} obj
+	 * @param {object} attribute object holding { class, index, cssObject }
+	 * @param {boolean} isChild is this a child slide of a slide?
+	 * @returns {object} slide returns an object containing slide details
+	 */
+	function Slide( obj, attribute, isChild ){
+		if( typeof isChild === 'undefined' ){
+			isChild = false;
+		}
+
+		var trans = {
+			effect: $(obj).attr('data-effect') || 'slide',
+			from: $(obj).attr('data-from') || 'bottom'
+		};
+		$(obj).addClass(attribute.class)
+			  .attr(this.slideNumber, attribute.index)
+			  .children('div').children('.upslide-bannerText')
+			  .css(attribute.css);
+		var slide = {
+			id: attribute.index,
+			element: obj,
+			child: isChild,
+			transition: trans
+		};
+		return slide;
+	}
+
+	function Thumbnail( attribute, isChild ){
+
+		if( typeof attribute !== 'object' ){
+			console.log( 'Attributes must be an array. Currently it is (a(n)) ' + typeof attribute);
+			return;
+		}
+		if( typeof isChild === 'undefined' ){
+			isChild = false;
+		}
+
+
+		//el = slides[i].element;
+		var thumbnail = $('<div/>', {
+			class: attribute.class
+		}).attr( attribute.name, attribute.value )
+			.css( attribute.css )
+			.html('<p class="upslide-thumbnailHeader">' + attribute.text + '</p');
+
+		return thumbnail;
+
+	}
+
+	/**
+	 * Fade an element in
+	 *
+	 * @param {object} el element to perfom the fade on
+	 * @param {int} sp speed to fade element in at
+	 * @returns {void}
+	 */
+	function fadeInElement(el, sp) {
+		$(el).hide().fadeIn(sp);
+//			if( typeof parent === 'undefined' ){
+//				$('.' + this.slideClass).each(function(i, el){
+//					if( parseInt( $(el).attr(_.slideNumber) ) !== _.currentSlide && parseInt( $(el).attr(_.slideNumber) ) !== _.previousSlide ) {
+//						$(el).children().children('.upslide-bannerText').stop().hide();
+//					}
+//					else if (parseInt( $(el).attr(_.slideNumber) ) === _.currentSlide) {
+//						$(el).children().children('.upslide-bannerText').stop().fadeIn(_.opts.fadingHeadersSpeed);
+//					}
+//				});
+//			}
+//			else {
+//
+//			}
+	};
+
+	/**
+	 * Produce object for .css() and .animate()
+	 *
+	 * @param {object} slideProps holds slide properties (width, height)
+	 * @param {string} effect desired effect (slide, grow)
+	 * @param {string} from position the effects originates from (top, left, right, etc...)
+	 * @returns {object} css and animation objects
+	 */
+	function returnEffectsAndAnimations(slideProps, effect, from) {
+		cass = {
+			display: 'block',
+			opacity: 0,
+			zIndex: '2'
+		};
+		anim = {
+			top: '0px',
+			left: '0px',
+			opacity: 1
+		};
+		switch (effect) {
+			case 'slide':
+				switch (from) {
+					case 'bottom':
+						cass.top = slideProps.height + 'px';
+					break;
+					case 'top':
+						cass.top = '-' + slideProps.height + 'px';
+					break
+					case 'left':
+						cass.left = '-' + slideProps.width + 'px';
+					break;
+					case 'right':
+						cass.dipslay = 'block';
+						cass.left = slideProps.width + 'px';
+					break;
+					case 'bottomLeft':
+						cass.top = slideProps.height + 'px';
+						cass.left = '-' + slideProps.width + 'px';
+					break;
+					case 'bottomRight':
+						cass.top = slideProps.height + 'px';
+						cass.left = slideProps.width + 'px';
+					break;
+					case 'topLeft':
+						cass.top = '-' + slideProps.height + 'px';
+						cass.left = '-' + slideProps.width + 'px';
+					break;
+					case 'topRight':
+						cass.top = '-' + slideProps.height + 'px';
+						cass.left = slideProps.width + 'px';
+					break;
+					default:
+						cass.top = $(window).height() + slideProps.height + 'px';
+					break;
+				}
+			break;
+			case 'grow':
+				cass.width = '0px';
+				cass.height = '0px';
+				anim.width = '100%';
+				anim.height = '100%';
+
+				switch (from) {
+					case 'center':
+						cass.top = '50%';
+						cass.left = '50%';
+					break;
+					case 'left':
+						cass.top = '50%';
+					break;
+					case 'right':
+						cass.top = '50%';
+						cass.left = slideProps.width + 'px';
+					break;
+					case 'top':
+						cass.left = '50%';
+						cass.top = '0px';
+					break;
+					case 'bottom':
+						cass.left = '50%';
+						cass.top = slideProps.height + 'px';
+					break;
+					case 'bottomLeft':
+						cass.top = slideProps.height + 'px';
+						cass.left = '-' + slideProps.width + 'px';
+					break;
+					case 'bottomRight':
+						cass.top = slideProps.height + 'px';
+						cass.left = slideProps.width + 'px';
+					break;
+					case 'topLeft':
+						cass.top = '-' + slideProps.height + 'px';
+						cass.left = '-' + slideProps.width + 'px';
+					break;
+					case 'topRight':
+						cass.top = '0px';
+						cass.left = slideProps.width + 'px';
+					break;
+
+				}
+			break;
+		}
+
+		//console.log(cass);
+		return {
+			cass: cass,
+			anim: anim
+		};
+	}
+
+
 	$.fn.upslide = function( options ){
 		 return  new init( this, options );
 	};

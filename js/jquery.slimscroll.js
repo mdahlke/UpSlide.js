@@ -375,7 +375,7 @@
 					}
 					else
 					{
-						document.attachEvent("onmousewheel", _onWheel)
+						document.attachEvent("onmousewheel", _onWheel);
 					}
 				}
 

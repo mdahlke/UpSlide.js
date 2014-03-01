@@ -3,44 +3,70 @@
 		<title>UpSlide.js</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="css/style.css" type="text/css" rel="stylesheet" />
-		<link href="css/upslide.css" type="text/css" rel="stylesheet" />
+		<link href="css/new_upslide.css" type="text/css" rel="stylesheet" />
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/jquery-ui-1.10.3.custom.js"></script>
-		<script src="js/jquery.mousewheel.js"></script>
-		<script src="js/jquery.upslide.js"></script>
+		<script src="js/new_jquery.upslide.js"></script>
 		<script src="js/jquery.slimscroll.js"></script>
-		
+
 	</head>
 	<body>
-		
+
 		<div class="loadingCover">
 			<p>Loading content...</p>
 		</div>
-		
+
 		<div id="upslide" class="upslide">
-			<ul>	
-				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide7.jpg') no-repeat;background-position:center">
+			<ul>
+				<li style="background:url('img/slide7.jpg')" data-effect="slide" data-from="topRight">
 					<div>
 						<h2 class="upslide-bannerText">UpSlide.js</h2>
+						<div class="upslide-content">
+							<p>
+								Hello!
+							</p>
+						</div>
 					</div>
+					<ul class='upslideHorizontal'>
+						<li style="background:url('img/slide5.jpg');" data-effect="slide" data-from="left">
+							<div>
+								<h2 class="upslide-bannerText">Second 1</h2>
+								<div class="upslide-content">
+									<p>
+										HI!
+									</p>
+								</div>
+							</div>
+						</li>
+						<li style="background:url('img/slide3.jpg');">
+							<div>
+								<h2 class="upslide-bannerText">Second 2</h2>
+							</div>
+						</li>
+						<li style="background:url('img/slide1.jpg');" data-effect="fade" data-from="bottom">
+							<div>
+								<h2 class="upslide-bannerText">Second 3</h2>
+							</div>
+						</li>
+					</ul>
 				</li>
-				
-				
-				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide3.jpg') no-repeat;background-position:center">
+
+
+				<li style="background:url('img/slide3.jpg')">
 					<div>
 						<h2 class="upslide-bannerText">Give your website new life!</h2>
-						<div id="contact" class="content">
+						<div id="contact" class="upslide-content">
 							<p>With UpSlide.js you can create a unique website with a few lines of code!
 						</div>
 					</div>
 				</li>
-				
-				
-				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide4.jpg') no-repeat;background-position:center">
+
+
+				<li style="background:url('img/slide4.jpg');" data-effect="grow" data-from="topRight">
 					<div>
 						<h2 class="upslide-bannerText">Things you can do with it?</h2>
-						<div class="content">
-							
+						<div class="upslide-content">
+
 							<div id='hiddenDiv' style='position:absolute; left:900px;display:none'>Hidden Content</div>
 							<p>UpSlide.js works as a beautiful photo slider. But, I started this project having a more unique idea in mind.</p>
 
@@ -53,26 +79,51 @@
 							</p>
 						</div>
 					</div>
+					<ul class='upslideHorizontal'>
+						<li style="background:url('img/slide3.jpg');">
+							<div>
+								<h2 class="upslide-bannerText">I should be hidden</h2>
+								<div class="upslide-content">
+									Content
+								</div>
+							</div>
+						</li>
+						<li style="background:url('img/slide6.jpg');">
+							<div>
+								<h2 class="upslide-bannerText">I should be hidden</h2>
+							</div>
+						</li>
+						<li style="background:url('img/slide2.jpg');">
+							<div>
+								<h2 class="upslide-bannerText">I should be hidden</h2>
+							</div>
+						</li>
+						<li style="background:url('img/slide1.jpg');">
+							<div>
+								<h2 class="upslide-bannerText">I should be hidden</h2>
+							</div>
+						</li>
+					</ul>
 				</li>
-				
-				
-				<li class="upslide-bannerBackground" style="display: block;background:url('img/slide6.jpg') no-repeat;background-position:center">
+
+
+				<li style="background:url('img/marioLand.jpg');" data-effect="grow" data-from="bottom">
 					<div>
 						<h2 class="upslide-bannerText">How to use it?</h2>
-						<div id="howTo" class="content">
-							
+						<div id="howTo" class="upslide-content content">
+
 							<h4>HTML...</h4>
 							<div>
 								<small style='float:left' class="selectCode">select</small>
 								<textarea spellcheck="false">
 &lt;div id="upslide" class="upslide">
-  &lt;ul>	
-    &lt;li class="upslide-bannerBackground" style="display: block;background:url('img/slide1.jpg') no-repeat;background-position:center">
+  &lt;ul>
+    &lt;li class="upslide-bannerBackground" style="background:url('img/slide1.jpg');">
       &lt;div>
 	   &lt;p class="upslide-bannerText">Slide 1&lt;/p>
       &lt;/div>
     &lt;/li>
-    &lt;li class="upslide-bannerBackground" style="display: block;background:url('img/slide2.jpg') no-repeat;background-position:center">
+    &lt;li class="upslide-bannerBackground" style="background:url('img/slide2.jpg');">
       &lt;div>
 	   &lt;p class="upslide-bannerText">Slide 2&lt;/p>
       &lt;/div>
@@ -81,7 +132,7 @@
 &lt;/div>
 								</textarea>
 							</div>
-						
+
 							<h4>JavaScript...</h4>
 							<div>
 								<small style='float:left' class="selectCode">select</small>
@@ -118,7 +169,7 @@
 				inOrOut: 'in'
 			}
 		},
-		onSlide: function() { 
+		onSlide: function() {
 			console.log('I just slid!');
 		}
 	});
@@ -127,7 +178,7 @@
 
 								</textarea>
 							</div>
-							
+
 							<h4>CSS...</h4>
 							<div>
 								<small style='float:left' class="selectCode">select</small>
@@ -198,10 +249,10 @@
 	color: white;
 	width: 100%;
 	z-index: 9;
-	
+
 	color: white;
 	text-shadow:
-   -1px -1px 0 #000,  
+   -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
      1px 1px 0 #000;
@@ -252,12 +303,12 @@
 					</div>
 				</li>
 			</ul>
-		</div>	
+		</div>
 
 		<div class="slideOptions" id='toggleAutoSlide' style='position:absolute;top:10px; left:10px;z-index:99999999999;color:white;cursor:pointer;'>Stop auto-scroll</div>
-		
+
 		<script type="text/javascript">
-			
+
 			$(document).ready(function(){
 				setTimeout(function(){
 					$('.loadingCover').remove();
@@ -266,14 +317,14 @@
 				$('.content').css({
 					'height': ( $(window).height() / 1.35 ) + 'px'
 				});
-				
+
 				$(window).resize(function(){
 					$('.content').css({
 						'height': ( $(window).height() / 1.35 ) + 'px'
 					});
 				});
-			
-		   
+
+
 				var upslide = $('.upslide > ul').upslide({
 					speed: 1500,
 					delay: 5000,
@@ -281,14 +332,18 @@
 					fadingHeaders: true,
 					fadingHeadersSpeed: 2000,
 					headerHideText: false,
-					headerBackgroundTransparency: 1,
+					headerBackgroundTransparency: 0.8,
 					headerBackgroundColor: [],
 					headerGenerateBackgroundColor: true,
 					sameSlideAndHeaderColor: true,
 					fullscreen: true,
 					autoSlide: false,
 					arrowControl: true,
-					scrollControl: false,
+					scrollControl: true,
+					transition: {
+						effect: 'slide',
+						from: 'bottom'
+					},
 					thumbnail: {
 						show: true,
 						width: '10%',
@@ -300,24 +355,24 @@
 					indicator: {
 						speed: 1500,
 						easing: 'easeInOutQuint',
-						width: '5px',
+						width: '10px',
 						backgroundColor: [],
-						transparency: 0.5,
+						transparency: 1,
 						position: {
-							side: 'left',
+							side: 'right',
 							inOrOut: 'in'
 						}
 					},
-					onSlide: function() { 
+					onSlide: function() {
 						//console.log('I just slid!');
 					}
 				});
-				
-				console.log(upslide);
+
+/*
 				upslide.opts.onSlideStart = function(){
 					$('.slideOptions').fadeOut();
 				};
-				
+
 				upslide.opts.onSlideComplete = function(){
 					if( upslide.currentSlide === ( upslide.numberOfSlides - 1 ) ) {
 						$('#downloadDiv').stop().animate({
@@ -329,12 +384,12 @@
 					}
 					$('.slideOptions').fadeIn(300);
 				};
-				
-				$('.' + upslide.thumbnailWrapper).slimscroll({
+*/
+				$('.' + upslide.thumbnailWrapperClass).slimscroll({
 					width: upslide.thumbnailWrapperWidth,
-					height: upslide.thumbnailWrapperHeight
+					height: '100%'
 				});
-
+/*
 				$('#toggleAutoSlide').click(function(){
 					if(upslide.opts.autoSlide){
 						upslide.opts.autoSlide = false;
@@ -359,11 +414,11 @@
 				$('.selectCode').click(function(){
 					$(this).siblings('textarea').focus().select();
 				});
-				
-				
+
+*/
 			});
-			
-			
+
+
 		</script>
 	</body>
 </html>
