@@ -5,9 +5,10 @@ jQuery image / webpage slider plugin is easy to implement and resizes nicely wit
 
 I am currently in the process of using __UpSlide.js__ to create a __remote web presentation__ builder!
 
-VERSION 2.0.0
-	Added the ability to have child slides
-	Added the ability to have different transition effects instead of just sliding up!
+**VERSION 2.0.0**
+
+- Added the ability to have child slides
+- Added the ability to have different transition effects instead of just sliding up!
 
 Working example -- http://upslide.michaeldahlke.com  <-- Currently Using Version 1.5.0
 

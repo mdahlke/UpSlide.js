@@ -1,6 +1,12 @@
-Version 1.6 - Jan 27, 2014
-- Removed jquery.mousewheel.js dependency
-	-- upslide can now be controlled with mousewheel without external library
+Version 2.0.1 - March 02, 2014
+ - Fixed thumbnail indicator going off-screen when set to the right side
+ - Some code optimizations
+
+Version 2.0.0 - March 01, 2014
+ - Code overhaul ** This version may break your site if you're using v1.5.0 ** 
+	READ the DOCUMENTATION regarding the changes to the options that have been changed and how it is now structured
+ - Allows for "children" to more simulate sub-pages if you're using it more as a website
+
 
 Version 1.5 - Jan 17, 2014
  - Added support for scrolling thumbnails instead of sqeezing them onto to the page

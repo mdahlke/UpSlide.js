@@ -14,6 +14,7 @@ database.yml
 doc/
 nbproject/
 compressed/
+js/bak/
 
 *.swp
 *~

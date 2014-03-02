@@ -82,33 +82,33 @@
 			onSlideComplete: function() { return false; }
 		}, options);
 
+		
 		this.objParentID = typeof $(obj).parent().attr('id') === 'undefined' ? Math.round(Math.random(1 * 100)) + 1 : $(obj).parent().attr('id');
+		this.parentOffsetTop = $(obj).parent().offset().top;
+		this.slideWrapperClass = 'upslide-slideWrapper';
+		this.slideClass = 'upslide-slide';
+		this.childSlideClass = 'upslide-childSlide';
+		this.slideNumber = 'data-slideNumber';
+		this.childSlideNumber = 'data-childSlideNumber';
+		this.slideOffsetTop = 'data-offsetTop';
+		this.thumbnailClass = 'upslide-thumbnail';
+		this.thumbnailChildClass = 'upslide-thumbnailChild';
+		this.thumbnailSlideNumber = 'data-slideNumberThumb';
+		this.thumbnailWrapperClass = 'upslide-thumbnailWrapper';
+		this.thumbnailChildWrapperClass = 'upslide-thumbnailChildWrapper';
+		this.indicator = 'upslide-indicator';
 		this.intervalVar = "";
 		this.slideWrapperWidth = 0;
-		this.parentOffsetTop = $(obj).parent().offset().top;
 		this.currentSlide = 0;
 		this.currentChildSlide = 0;
 		this.currentChildSlide = 0;
-		this.previousSlide = 0;
-		this.numberOfSlides = $(obj).children(this.opts.liAlternative).length;
-		this.slideWrapperClass = 'upslide-slideWrapper';
-		this.slideClass = 'upslide-slide';
-		this.childSlideClass = 'upslide-childSlide_' + this.objParentID;
-		this.slideNumber = 'data-slideNumber_' + this.objParentID;
-		this.childSlideNumber = 'data-childSlideNumber_' + this.objParentID;
-		this.slideOffsetTop = 'data-offsetTop_' + this.objParentID;
+		//this.numberOfSlides = $(obj).children(this.opts.liAlternative).length;
 		this.slideLookup = [];
 		this.slides = [];
 		this.childSlides = [];
 		this.backupText = [];
 		this.thumbnailsObject = [];
 		this.thumbnailsChildObject = [];
-		this.thumbnailClass = 'upslide-thumbnail';
-		this.thumbnailChildClass = 'upslide-thumbnailChild';
-		this.thumbnailSlideNumber = 'data-slideNumberThumb_' + this.objParentID;
-		this.thumbnailWrapperClass = 'upslide-thumbnailWrapper';
-		this.thumbnailChildWrapperClass = 'upslide-thumbnailChildWrapper';
-		this.indicator = 'indicator_' + this.objParentID;
 		this.slideThumbnails = [];
 		this.thumbnailHeight = 0;
 		this.thumbnailWidth = 0;
@@ -179,7 +179,7 @@
 
 				var attr = {
 					scrollable: this.opts.thumbnail.scrollable,
-					wrapperClass: this.thumbnailWrapperClass,
+					class: this.thumbnailWrapperClass,
 					position: _.opts.thumbnail.position,
 					css: {
 						width: this.thumbnailWrapperWidth,
@@ -188,14 +188,6 @@
 				};
 
 				this.thumbnailWrapper = new ThumbnailWrapper( attr );
-
-
-//				if( $('.' + this.thumbnailWrapperClass).length === 0 ){
-//					$(obj).prepend( thumbnailWrapper );
-//				}
-//				else {
-//					console.log( 'thumbnailWrapper currently exists :(' );
-//				}
 
 			}
 
@@ -214,11 +206,6 @@
 				'width': this.width + 'px',
 				'height': this.height + 'px'
 			});
-//			$(obj).css({
-//				'top': '0',
-//				'margin-left': this.thumbnailMargin + 'px',
-//				'width': this.slideWrapperWidth + 'px'
-//			});
 
 			this.createSlides();
 
@@ -250,41 +237,6 @@
 					'left': this.thumbnailIndicatorOffset + 'px'
 				});
 
-//			if(_.opts.indicator.position.side === 'left') {
-//				positionValue = _.opts.indicator.position.inOrOut === 'out' ? '-' + _.opts.indicator.width : '0px';
-//				if( typeof this.opts.indicator.backgroundColor === 'object' ){
-//					bgc = this.opts.indicator.backgroundColor[_.currentSlide];
-//				}
-//				else {
-//					bgc = this.opts.indicator.backgroundColor;
-//				}
-//				this.newThumbnailIndicator = $('<div />', {
-//					class: this.indicator + ' upslide-indicator'
-//				}).css({
-//					'background-color': bgc,
-//					'width': _.opts.indicator.width,
-//					'height': this.indicatorHeight,
-//					'left': positionValue
-//				});
-//			}
-//			else {
-//				positionValue = _.opts.indicator.position.inOrOut === 'out' ? '-' + _.opts.indicator.width : '0px';
-//
-//				if( typeof this.opts.indicator.backgroundColor === 'object' ){
-//					bgc = this.opts.indicator.backgroundColor[_.currentSlide];
-//				}
-//				else {
-//					bgc = this.opts.indicator.backgroundColor;
-//				}
-//				this.newThumbnailIndicator = $('<div />', {
-//					class: this.indicator + ' upslide-indicator'
-//				}).css({
-//					'background-color': bgc,
-//					'width': _.opts.indicator.width,
-//					'height': this.indicatorHeight,
-//					'right': positionValue
-//				});
-//			}
 
 			$('.' + this.thumbnailWrapperClass).append(this.newThumbnailIndicator);
 		};
@@ -321,20 +273,19 @@
 					},
 					text: ''
 				};
-				var slide = new Slide( el, slideAttributes );
-				var thumbnailText = $(slide.element).children('div').children('.upslide-bannerText').text();
-				console.log($(slide.element).children('div').children('.upslide-bannerText').text());
-				var thumbnailAttributes = {
-					name: _.thumbnailSlideNumber,
-					value: slideNumber,
-					class: _.thumbnailClass,
-					css: {
-						backgroundImage: $(slide.element).css('background-image'),
-						height: _.opts.thumbnail.height
+				var slide = new Slide( el, slideAttributes ),
+					thumbnailText = $(slide.element).children('div').children('.upslide-bannerText').text(),
+					thumbnailAttributes = {
+						name: _.thumbnailSlideNumber,
+						value: slideNumber,
+						class: _.thumbnailClass,
+						css: {
+							backgroundImage: $(slide.element).css('background-image'),
+							height: _.opts.thumbnail.height
+						},
+						text: thumbnailText
 					},
-					text: thumbnailText
-				};
-				var slideThumbnail = new Thumbnail( thumbnailAttributes );
+					slideThumbnail = new Thumbnail( thumbnailAttributes );
 				_.thumbnailWrapper.append( $(slideThumbnail) );
 
 				_.slides.push( slide );
@@ -346,16 +297,16 @@
 
 					var thumbnailWrapperAttributes = {
 						scrollable: _.opts.thumbnail.scrollable,
-						wrapperClass: _.thumbnailChildWrapperClass,
+						class: _.thumbnailChildWrapperClass,
 						position: _.opts.thumbnail.position,
 						css: {
 							width: _.thumbnailWrapperWidth,
 							height: '60px'
 						}
 					};
-					var thumbnailWrapper = new ThumbnailWrapper( thumbnailWrapperAttributes );
-					var numberOfChildren = $(el).children('.upslideHorizontal').children('li').length;
-					var childWidth = _.thumbnailWrapperWidth / numberOfChildren;
+					var thumbnailWrapper = new ThumbnailWrapper( thumbnailWrapperAttributes ),
+						numberOfChildren = $(el).children('.upslideHorizontal').children('li').length,
+						childWidth = _.thumbnailWrapperWidth / numberOfChildren;
 
 					$(el).children('.upslideHorizontal').children().each(function(ii, e) {
 						slideNumber++;
@@ -432,26 +383,21 @@
 		};
 
 		this.move = function( dir, animation ) {
-			var nextSlide;
-			var previousSlideNumber = this.currentSlide;
-			try {
-				this.previousSlide = this.slides[previousSlideNumber].element;
-			}
-			catch(e){
-				console.log(e);
-			}
-			if( typeof dir === 'object'){
-				var a = dir[1];
-				dir = dir[0];
-			}
-			else if( typeof dir === 'undefined' ){
+			var nextSlide,
+				previousSlideNumber = this.currentSlide;
+			this.previousSlide = this.slides[previousSlideNumber].element;
+			
+			if( typeof dir === 'undefined' || 
+				( dir !== 'next' && dir !== 'prev' && isNaN(dir) ) ){
 				dir = 'next';
 			}
 
 			if( !isNaN( dir ) ) {
 				this.currentSlide = dir;
 				this.moveToSlide(this.currentSlide, animation);
-
+				if( this.opts.thumbnail.show ){
+					this.moveThumbnailToSlide(this.currentSlide);
+				}
 			}
 			else {
 				if( dir === 'next' ){
@@ -472,11 +418,10 @@
 
 				if( this.currentSlide !== previousSlideNumber ){
 					this.moveToSlide(this.currentSlide, animation);
+					if( this.opts.thumbnail.show ){
+						this.moveThumbnailToSlide(this.currentSlide);
+					}
 				}
-			}
-
-			if( this.opts.thumbnail.show ){
-				this.moveThumbnailToSlide(this.currentSlide);
 			}
 
 			return this;
@@ -485,31 +430,41 @@
 		this.moveToSlide = function( number, animation ){
 
 			_.stop();
-			var duration;
-			var bannerText;
-			var el = _.slides[number].element;
-			var effect = $(el).attr('data-effect') || 'slide';
-			var from = $(el).attr('data-from') || 'bottom';
-			var getProps = returnEffectsAndAnimations(this.slideProps, effect, from);
-			var cass = getProps.cass;
-			var anim = getProps.anim;
+			var duration,
+				bannerText,
+				el = _.slides[number].element,
+				effect = $(el).attr('data-effect') || 'slide',
+				from = $(el).attr('data-from') || 'bottom',
+				getProps = returnEffectsAndAnimations(this.slideProps, effect, from),
+				css = getProps.css,
+				anim = getProps.anim,
 
 			bannerText = $(el).children().children('.upslide-bannerText')[0];
 
-			if(typeof animation === 'undefined'){
-				animation = true;
-			}
-			else {
-				animation = false;
-			}
+			animation = typeof animation === 'undefined' ? true : false;
 			duration = animation === false ? 0: this.opts.speed;
 
-			$(el).stop().css(cass).animate(anim, {
+			
+			$(el).stop().css(css).animate(anim, {
 				easing: _.opts.easing,
 				duration: duration,
 				start: function(){
 					if(_.opts.fadingHeaders){
 						fadeInElement( bannerText, _.opts.fadingHeadersSpeed );
+					}
+					if( effect === 'slide' ){
+						var pos;
+						if( from === 'bottom' ){
+							pos = '-' + this.height + 'px';
+						}
+						else if( from === 'top' ) {
+							pos = this.height + 'px';
+						}
+						$( this.previousSlide ).animate({
+							top: pos
+						}, {
+							duration: _.opts.speed
+						});
 					}
 					$(_.previousSlide).css({
 						zIndex: '1'
@@ -536,36 +491,28 @@
 		};
 
 		this.moveThumbnailToSlide = function( slideNumber, animation ){
-			var pos, bgc, anim;
+			var pos, bgc, anim, duration;
 			var thumb = $('*[' + this.thumbnailSlideNumber + '="' + slideNumber + '"]');
 			var isChild = this.slides[slideNumber].child;
-			if( typeof this.opts.indicator.backgroundColor === 'object' ){
-				bgc = this.opts.indicator.backgroundColor[slideNumber];
-			}
-			else {
-				bgc = this.opts.indicator.backgroundColor;
-			}
+			
+			bgc = typeof this.opts.indicator.backgroundColor === 'object' ? this.opts.indicator.backgroundColor[slideNumber] : this.opts.indicator.backgroundColor;
 			if( typeof bgc === 'undefined' ){
 				bgc = this.opts.headerBackgroundColor[slideNumber];
 			}
-			if(typeof animation === 'undefined'){
-				animation = true;
-			}
-			else {
-				animation = false;
-			}
-			var duration = animation === false ? 0: this.opts.speed;
+			
+			animation = typeof animation === 'undefined' ? true : false;			
+			duration = animation === false ? 0: this.opts.speed;
 
 			if( isChild ){
 				pos = thumb.offset().top - this.parentOffsetTop + $('*[' + this.thumbnailSlideNumber + '="' + slideNumber + '"]').parent().parent().parent().scrollTop();
+				var thumbOffset = thumb.offset().left - thumb.parent().parent().offset().left;
 				anim = {
 					top: ( pos - 1 ) + 'px',
 					backgroundColor: bgc,
-					left: thumb.offset().left + 'px',
+					left: thumbOffset + 'px',
 					width: thumb.width(),
 					height: this.opts.indicator.width
 				};
-				var side = this.opts.indicator.position.side === 'right' ? '' : '';
 				anim[this.opts.indicator.position.side] = thumb.offset()[this.opts.indicator.position.side];
 			}
 			else {
@@ -580,7 +527,9 @@
 
 			}
 
-			$('.' + this.indicator).stop().css(this.opts.indicator.position.side, '0px').animate(anim, {
+			$('.' + this.indicator).stop()
+				.css(this.opts.indicator.position.side, '0px')
+				.animate(anim, {
 					easing: _.opts.indicator.easing,
 					duration: duration,
 					queue: true
@@ -646,8 +595,8 @@
 		}
 
 		if( this.opts.scrollControl ){
-			$(document).on('mousewheel', function(e){
-				_.move( e.deltaY === 1 ? 'down' : 'up' );
+			$(document).on('mousewheel DOMMouseScroll', function(e){
+				_.move( e.deltaY === 1 ? 'prev' : 'next' );
 			});
 		}
 
@@ -701,17 +650,13 @@
 	}
 
 	function ThumbnailWrapper( attr ) {
-		if( typeof attr !== 'object' ){
-			console.log( 'attr must be an object. Currently it is (a(n)) ' + typeof attr );
-			return;
-		}
+		var overflow = attr.scrollable === true ? 'auto' : 'hidden',
+			thumbnailWrapper;
+	
+		attr.css.overflow = overflow;
 
-		var overflow = attr.scrollable === true ? 'auto' : 'hidden';
-
-		 attr.css.overflow = overflow;
-
-		var thumbnailWrapper = $('<div/>', {
-				class: attr.wrapperClass
+		thumbnailWrapper = $('<div/>', {
+				class: attr.class
 			}).css( attr.css ).css(attr.position, '0px');
 
 		return thumbnailWrapper;
@@ -749,17 +694,10 @@
 	}
 
 	function Thumbnail( attribute, isChild ){
-
-		if( typeof attribute !== 'object' ){
-			console.log( 'Attributes must be an array. Currently it is (a(n)) ' + typeof attribute);
-			return;
-		}
 		if( typeof isChild === 'undefined' ){
 			isChild = false;
 		}
 
-
-		//el = slides[i].element;
 		var thumbnail = $('<div/>', {
 			class: attribute.class
 		}).attr( attribute.name, attribute.value )
@@ -767,7 +705,6 @@
 			.html('<p class="upslide-thumbnailHeader">' + attribute.text + '</p');
 
 		return thumbnail;
-
 	}
 
 	/**
@@ -803,7 +740,7 @@
 	 * @returns {object} css and animation objects
 	 */
 	function returnEffectsAndAnimations(slideProps, effect, from) {
-		cass = {
+		css = {
 			display: 'block',
 			opacity: 0,
 			zIndex: '2'
@@ -817,89 +754,88 @@
 			case 'slide':
 				switch (from) {
 					case 'bottom':
-						cass.top = slideProps.height + 'px';
+						css.top = slideProps.height + 'px';
 					break;
 					case 'top':
-						cass.top = '-' + slideProps.height + 'px';
+						css.top = '-' + slideProps.height + 'px';
 					break
 					case 'left':
-						cass.left = '-' + slideProps.width + 'px';
+						css.left = '-' + slideProps.width + 'px';
 					break;
 					case 'right':
-						cass.dipslay = 'block';
-						cass.left = slideProps.width + 'px';
+						css.dipslay = 'block';
+						css.left = slideProps.width + 'px';
 					break;
 					case 'bottomLeft':
-						cass.top = slideProps.height + 'px';
-						cass.left = '-' + slideProps.width + 'px';
+						css.top = slideProps.height + 'px';
+						css.left = '-' + slideProps.width + 'px';
 					break;
 					case 'bottomRight':
-						cass.top = slideProps.height + 'px';
-						cass.left = slideProps.width + 'px';
+						css.top = slideProps.height + 'px';
+						css.left = slideProps.width + 'px';
 					break;
 					case 'topLeft':
-						cass.top = '-' + slideProps.height + 'px';
-						cass.left = '-' + slideProps.width + 'px';
+						css.top = '-' + slideProps.height + 'px';
+						css.left = '-' + slideProps.width + 'px';
 					break;
 					case 'topRight':
-						cass.top = '-' + slideProps.height + 'px';
-						cass.left = slideProps.width + 'px';
+						css.top = '-' + slideProps.height + 'px';
+						css.left = slideProps.width + 'px';
 					break;
 					default:
-						cass.top = $(window).height() + slideProps.height + 'px';
+						css.top = $(window).height() + slideProps.height + 'px';
 					break;
 				}
 			break;
 			case 'grow':
-				cass.width = '0px';
-				cass.height = '0px';
+				css.width = '0px';
+				css.height = '0px';
 				anim.width = '100%';
 				anim.height = '100%';
 
 				switch (from) {
 					case 'center':
-						cass.top = '50%';
-						cass.left = '50%';
+						css.top = '50%';
+						css.left = '50%';
 					break;
 					case 'left':
-						cass.top = '50%';
+						css.top = '50%';
 					break;
 					case 'right':
-						cass.top = '50%';
-						cass.left = slideProps.width + 'px';
+						css.top = '50%';
+						css.left = slideProps.width + 'px';
 					break;
 					case 'top':
-						cass.left = '50%';
-						cass.top = '0px';
+						css.left = '50%';
+						css.top = '0px';
 					break;
 					case 'bottom':
-						cass.left = '50%';
-						cass.top = slideProps.height + 'px';
+						css.left = '50%';
+						css.top = slideProps.height + 'px';
 					break;
 					case 'bottomLeft':
-						cass.top = slideProps.height + 'px';
-						cass.left = '-' + slideProps.width + 'px';
+						css.top = slideProps.height + 'px';
+						css.left = '-' + slideProps.width + 'px';
 					break;
 					case 'bottomRight':
-						cass.top = slideProps.height + 'px';
-						cass.left = slideProps.width + 'px';
+						css.top = slideProps.height + 'px';
+						css.left = slideProps.width + 'px';
 					break;
 					case 'topLeft':
-						cass.top = '-' + slideProps.height + 'px';
-						cass.left = '-' + slideProps.width + 'px';
+						css.top = '-' + slideProps.height + 'px';
+						css.left = '-' + slideProps.width + 'px';
 					break;
 					case 'topRight':
-						cass.top = '0px';
-						cass.left = slideProps.width + 'px';
+						css.top = '0px';
+						css.left = slideProps.width + 'px';
 					break;
 
 				}
 			break;
 		}
 
-		//console.log(cass);
 		return {
-			cass: cass,
+			css: css,
 			anim: anim
 		};
 	}
